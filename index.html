@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Correctional — Discipline for men. Rescue for the exploited.</title>
+  <meta name="description" content="Correctional is a Christian program helping men overcome pornography and lust. 90% of every pledge funds the fight against human trafficking." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/logo-cross-plus.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="header-mark" aria-label="Correctional home">
+        <span class="wordmark wordmark--small">CORREC<svg class="cross" viewBox="0 0 60 100" aria-hidden="true"><rect x="22" y="0" width="16" height="100"/><rect x="0" y="22" width="60" height="16"/></svg>IONAL</span>
+      </a>
+      <button class="nav-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="header-nav" id="site-nav">
+        <a href="#pledge">Pledge</a>
+        <a href="#allocation">Transparency</a>
+        <a href="#donors">Ledger</a>
+        <a href="#evidence">Who it helps</a>
+        <a href="blog.html">Blog</a>
+        <a href="organizations.html">Organizations</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="smooth-content" id="smoothContent">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-grid" id="heroGrid" aria-hidden="true"></div>
+    <div class="container hero-content">
+      <h1 class="wordmark wordmark--hero" aria-label="Correctional">
+        CORREC<svg class="cross" viewBox="0 0 60 100" aria-hidden="true"><rect x="22" y="0" width="16" height="100"/><rect x="0" y="22" width="60" height="16"/></svg>IONAL
+      </h1>
+      <p class="hero-tagline">Discipline for men. Rescue for the exploited.</p>
+      <p class="hero-body">
+        Correctional is a Christ-centered program for men fighting pornography, lust, and sin.
+        Your battle funds someone else's freedom: <strong>90% of every pledge goes directly to
+        organizations doing documented work against trafficking and the sexual exploitation of children</strong>
+        — identification, aftercare, housing, prosecution, and the removal of child sexual abuse material.
+        The remaining 10% runs the program.
+      </p>
+      <div class="hero-split">
+        <a href="#allocation" class="split-90"><span class="split-num">90%</span><span class="split-label">TO THE FIGHT AGAINST TRAFFICKING</span></a>
+        <a href="#allocation" class="split-10" data-open-alloc="operations"><span class="split-num">10%</span><span class="split-label">RUNS CORRECTIONAL</span></a>
+      </div>
+      <a href="#pledge" class="btn btn-primary hero-cta">Make your pledge</a>
+      <div class="hero-verse">"You were bought at a price." &mdash; 1 Corinthians 6:20</div>
+    </div>
+  </section>
+
+  <!-- ============ PLEDGE ============ -->
+  <section class="section" id="pledge">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-index">01</span>
+        <h2>The Pledge</h2>
+        <p class="section-sub">Minimum $50. Recommended $100.</p>
+      </div>
+
+      <div class="pledge-grid">
+        <!-- Left: amount selection -->
+        <div class="panel pledge-panel">
+          <div class="pledge-amount-row">
+            <span class="micro-label">YOUR PLEDGE</span>
+            <div class="pledge-amount" id="pledgeAmount">$100</div>
+            <button class="btn-ghost" id="otherToggle" type="button">Other / specific amount</button>
+          </div>
+
+          <div class="custom-amount" id="customAmountWrap" hidden>
+            <label class="micro-label" for="customAmount">SPECIFIC AMOUNT (MIN $50)</label>
+            <div class="custom-amount-row">
+              <span class="custom-currency">$</span>
+              <input type="number" id="customAmount" min="50" step="1" placeholder="100" />
+              <button class="btn btn-secondary" id="customApply" type="button">Set</button>
+            </div>
+          </div>
+
+          <div class="slider-wrap">
+            <div class="slider-track-area" id="sliderTrackArea" data-lenis-prevent>
+              <div class="slider-track" id="sliderTrack">
+                <div
+                  class="slider-thumb"
+                  id="pledgeThumb"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Pledge amount"
+                  aria-valuemin="50"
+                  aria-valuemax="10000"
+                  aria-valuenow="100"
+                  aria-valuetext="$100"
+                ></div>
+              </div>
+            </div>
+            <div class="slider-labels" id="sliderLabels" aria-hidden="true"></div>
+          </div>
+
+          <div class="split-control" id="splitControl">
+            <div class="split-control-head">
+              <span class="micro-label">SPLIT CONTROL</span>
+              <span class="split-lock">YOU SET THE SPLIT</span>
+            </div>
+            <div class="split-control-body">
+              <input type="range" id="splitSlider" min="90" max="100" step="1" value="90" aria-label="Percent of pledge going to the charities" />
+              <div class="split-readline">
+                <span>TO THE CHARITIES <b id="splitPctCharity">90%</b></span>
+                <span>RUNS CORRECTIONAL <b id="splitPctCorr">10%</b></span>
+              </div>
+              <p class="fine-print split-control-note">You decide Correctional's share — take it from the default 10% down to 0% and send everything to the fight.</p>
+            </div>
+          </div>
+
+          <div class="pledge-split-readout">
+            <div class="readout">
+              <span class="micro-label">TO THE FRONT LINES (<span id="labelPctCharity">90%</span>)</span>
+              <span class="readout-num readout-red" id="split90">$90.00</span>
+            </div>
+            <div class="readout">
+              <span class="micro-label">RUNS CORRECTIONAL (<span id="labelPctCorr">10%</span>)</span>
+              <span class="readout-num" id="split10">$10.00</span>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-block" id="pledgeBtn" type="button">
+            Pledge <span id="pledgeBtnAmount">$100</span>
+          </button>
+          <p class="fine-print">Payment processing to be integrated (Stripe planned). This is a working prototype.</p>
+        </div>
+
+        <div class="panel impact-panel">
+          <span class="micro-label">PROJECTED IMPACT OF <span id="impactBase">$90.00</span> DEPLOYED</span>
+          <ul class="impact-list" id="impactList">
+            <li>
+              <span class="impact-num" data-impact="aftercare">2.0</span>
+              <span class="impact-desc"><span data-impact-label="aftercare">Days of aftercare housing, food, and casework</span>
+                <span class="impact-unit">@ $45 / DAY</span>
+              </span>
+            </li>
+            <li>
+              <span class="impact-num" data-impact="intercept">0.6</span>
+              <span class="impact-desc"><span data-impact-label="intercept">Border or transit interceptions</span>
+                <span class="impact-unit">@ $150 / OPERATION</span>
+              </span>
+            </li>
+            <li>
+              <span class="impact-num" data-impact="hours">2.6</span>
+              <span class="impact-desc"><span data-impact-label="hours">Investigation hours</span>
+                <span class="impact-unit">@ $35 / HOUR</span>
+              </span>
+            </li>
+            <li>
+              <span class="impact-num" data-impact="counsel">1.1</span>
+              <span class="impact-desc"><span data-impact-label="counsel">Trauma-informed counseling sessions</span>
+                <span class="impact-unit">@ $80 / SESSION</span>
+              </span>
+            </li>
+            <li>
+              <span class="impact-num" data-impact="legal">1.5</span>
+              <span class="impact-desc"><span data-impact-label="legal">Hours of survivor legal casework</span>
+                <span class="impact-unit">@ $60 / HOUR</span>
+              </span>
+            </li>
+            <li>
+              <span class="impact-num" data-impact="rescue">2.3%</span>
+              <span class="impact-desc"><span data-impact-label="rescue">Share of one documented rescue</span>
+                <span class="impact-unit">@ $4,000 / PERSON</span>
+              </span>
+            </li>
+          </ul>
+          <p class="fine-print">Illustrative model, not a promise. These numbers are not additive — they are six ways of reading the same dollars. <a href="impact.html">How we estimate this →</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ALLOCATION ============ -->
+  <section class="section" id="allocation">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-index">02</span>
+        <h2>Transparency</h2>
+      </div>
+      <p class="total-figure" id="raisedTotal">$0</p>
+      <p class="total-caption">Raised to date. Where every dollar went.</p>
+      <div class="rib" id="rib"></div>
+      <p class="ribbon-note">Unallocated funds are shown as their own partition. Allocations are updated quarterly, alongside the published disbursement reports.</p>
+    </div>
+  </section>
+
+  <!-- ============ RECENT PLEDGES ============ -->
+  <section class="section" id="donors">
+    <div class="container">
+      <div class="section-head donors-head">
+        <span class="section-index">03</span>
+        <div class="feed-head">
+          <h2>Ledger</h2>
+          <span class="feed-live"><span class="feed-live-dot" aria-hidden="true"></span> Live</span>
+        </div>
+      </div>
+      <ul class="feed-list" id="pledgerRows" aria-label="Recent pledges" aria-live="polite" aria-relevant="additions"></ul>
+    </div>
+  </section>
+
+  <!-- ============ EVIDENCE ============ -->
+  <section class="section" id="evidence">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-index">04</span>
+        <h2>Who the Money Actually Helps</h2>
+        <p class="section-sub">Published figures on who is being exploited, and what it takes to keep them free.</p>
+      </div>
+
+      <div class="stat-grid">
+        <a class="stat-card" href="stats/forced-sexual-exploitation.html">
+          <span class="stat-num">6.3 million</span>
+          <p>People in forced commercial sexual exploitation on any given day. Almost four in five are women or girls.</p>
+          <span class="source-link">ILO / Walk Free / IOM, Global Estimates of Modern Slavery (2022)</span>
+        
+          <span class="stat-more">Read the figure →</span>
+        </a>
+        <a class="stat-card" href="stats/children-forced-labour.html">
+          <span class="stat-num">3.3 million</span>
+          <p>Children in forced labour. More than half of them are in commercial sexual exploitation.</p>
+          <span class="source-link">ILO press summary of the 2022 Global Estimates</span>
+        
+          <span class="stat-more">Read the figure →</span>
+        </a>
+        <a class="stat-card" href="stats/child-victims-detected.html">
+          <span class="stat-num">38%</span>
+          <p>Of detected trafficking victims worldwide in 2022 were children — up 31% from 2019. Among girl victims, 60% were trafficked for sexual exploitation.</p>
+          <span class="source-link">UNODC, Global Report on Trafficking in Persons 2024</span>
+        
+          <span class="stat-more">Read the figure →</span>
+        </a>
+        <a class="stat-card" href="stats/cybertipline-2025.html">
+          <span class="stat-num">21.3 million</span>
+          <p>Reports of suspected child sexual exploitation submitted to NCMEC’s CyberTipline in 2025, containing 61.8 million files. Online-enticement reports reached 1.4 million.</p>
+          <span class="source-link">NCMEC CyberTipline data, 2025</span>
+        
+          <span class="stat-more">Read the figure →</span>
+        </a>
+        <a class="stat-card" href="stats/hotline-minors-2024.html">
+          <span class="stat-num">2,666</span>
+          <p>Minors identified in U.S. National Human Trafficking Hotline cases in 2024 — among cases where age was known. This is who reached a hotline, not total prevalence.</p>
+          <span class="source-link">Polaris / National Human Trafficking Hotline, 2024</span>
+        
+          <span class="stat-more">Read the figure →</span>
+        </a>
+        <a class="stat-card" href="stats/restoration-vs-rescue.html">
+          <span class="stat-num">258 / 13,557</span>
+          <p>IJM measured 258 survivors as fully restored in FY2025, against 13,557 people brought to freedom. Getting someone out is not the same as keeping them free.</p>
+          <span class="source-link">IJM Canada Impact Report, FY Apr 2024–Mar 2025</span>
+        
+          <span class="stat-more">Read the figure →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="wordmark wordmark--small">CORREC<svg class="cross" viewBox="0 0 60 100" aria-hidden="true"><rect x="22" y="0" width="16" height="100"/><rect x="0" y="22" width="60" height="16"/></svg>IONAL</span>
+      <p class="footer-line">A Christ-centered program for men. 90% of every pledge fights human trafficking. 10% keeps the lights on. Nothing hidden.</p>
+      <p class="footer-sources">Primary sources: <a href="https://www.walkfree.org/reports/global-estimates-of-modern-slavery-2022/" target="_blank" rel="noopener noreferrer">ILO / Walk Free / IOM 2022</a> · <a href="https://www.unodc.org/unodc/en/data-and-analysis/glotip.html" target="_blank" rel="noopener noreferrer">UNODC GLOTIP 2024</a> · <a href="https://humantraffickinghotline.org/en/statistics" target="_blank" rel="noopener noreferrer">Polaris Hotline 2024</a> · <a href="https://www.missingkids.org/cybertiplinedata" target="_blank" rel="noopener noreferrer">NCMEC 2025</a> · <a href="https://doi.org/10.1300/J189v02n03_03" target="_blank" rel="noopener noreferrer">Farley et al. 2004</a> · <a href="https://www.thorn.org/wp-content/uploads/2018/06/Thorn_Survivor_Insights_061118.pdf" target="_blank" rel="noopener noreferrer">Thorn Survivor Insights 2018</a></p>
+      <p class="footer-verse">"Learn to do right; seek justice. Defend the oppressed." &mdash; Isaiah 1:17</p>
+    </div>
+  </footer>
+
+  </div>
+
+  <script src="nav.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
