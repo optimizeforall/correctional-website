@@ -700,6 +700,9 @@ function buildAllocBar() {
       <div class="rib-tip-pct">${pctOf(p.id)}%</div>
       <div class="rib-tip-focus">${p.focus}</div>`;
     tip.hidden = false;
+    tip.style.animation = "none";
+    void tip.offsetWidth;
+    tip.style.animation = "";
     const max = Math.max(wrap.clientWidth - tip.offsetWidth, 0);
     const center = btn.offsetLeft + btn.offsetWidth / 2;
     tip.style.left = Math.round(Math.min(Math.max(center - tip.offsetWidth / 2, 0), max)) + "px";
@@ -733,17 +736,11 @@ function buildAllocBar() {
     }
   }
 
-  bar.addEventListener("pointerover", (e) => {
-    const btn = e.target.closest(".rib-seg");
-    if (btn) setTip(btn.dataset.id, btn);
-  });
-  bar.addEventListener("pointerleave", hideTip);
-  bar.addEventListener("focusin", (e) => {
-    const btn = e.target.closest(".rib-seg");
-    if (btn) setTip(btn.dataset.id, btn);
-  });
-  bar.addEventListener("focusout", (e) => {
-    if (!bar.contains(e.relatedTarget)) hideTip();
+  root.querySelectorAll(".rib-seg").forEach((btn) => {
+    btn.addEventListener("mouseenter", () => setTip(btn.dataset.id, btn));
+    btn.addEventListener("mouseleave", hideTip);
+    btn.addEventListener("focus", () => setTip(btn.dataset.id, btn));
+    btn.addEventListener("blur", hideTip);
   });
   root.addEventListener("click", (e) => {
     if (e.target.closest("[data-rib-close]")) { setOpen(null); return; }
@@ -771,11 +768,15 @@ const startTime = Date.now();
 function rowHtml(p) {
   const elapsed = (Date.now() - startTime) / 60000;
   const pct = p.charityPct ?? DEFAULT_CHARITY_PCT;
+  const ops = 100 - pct;
+  const tip = ops === 0
+    ? "100% of this pledge went to the charities \u2014 Correctional took nothing."
+    : pct + "% of this pledge went to the charities. " + ops + "% runs Correctional.";
   const anon = p.name === "Anonymous" ? " feed-name--anon" : "";
   return `
     <span class="feed-name${anon}">${p.name}</span>
     <span class="feed-amount">${fmtMoney(p.amount)}</span>
-    <span class="feed-split">${pct}%</span>
+    <span class="feed-split" tabindex="0" aria-label="${tip}">${pct}%<span class="feed-split-tip" role="tooltip" aria-hidden="true">${tip}</span></span>
     <span class="feed-time">${fmtAgo(p.minsAgo + elapsed)}</span>`;
 }
 
