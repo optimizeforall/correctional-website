@@ -7,7 +7,7 @@
   <meta name="description" content="Correctional is a Christian program helping men overcome pornography and lust. 90% of every pledge funds the fight against human trafficking." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="assets/logo-cross-plus.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -63,7 +63,7 @@
       <div class="section-head">
         <span class="section-index">01</span>
         <h2>The Pledge</h2>
-        <p class="section-sub">Minimum $50. Recommended $100.</p>
+        <p class="section-sub">Minimum $50. Recommended $150.</p>
       </div>
 
       <div class="pledge-grid">
@@ -71,7 +71,7 @@
         <div class="panel pledge-panel">
           <div class="pledge-amount-row">
             <span class="micro-label">YOUR PLEDGE</span>
-            <div class="pledge-amount" id="pledgeAmount">$100</div>
+            <div class="pledge-amount" id="pledgeAmount">$150</div>
             <button class="btn-ghost" id="otherToggle" type="button">Other / specific amount</button>
           </div>
 
@@ -79,7 +79,7 @@
             <label class="micro-label" for="customAmount">SPECIFIC AMOUNT (MIN $50)</label>
             <div class="custom-amount-row">
               <span class="custom-currency">$</span>
-              <input type="number" id="customAmount" min="50" step="1" placeholder="100" />
+              <input type="number" id="customAmount" min="50" step="1" placeholder="150" />
               <button class="btn btn-secondary" id="customApply" type="button">Set</button>
             </div>
           </div>
@@ -95,8 +95,8 @@
                   aria-label="Pledge amount"
                   aria-valuemin="50"
                   aria-valuemax="10000"
-                  aria-valuenow="100"
-                  aria-valuetext="$100"
+                  aria-valuenow="150"
+                  aria-valuetext="$150"
                 ></div>
               </div>
             </div>
@@ -121,22 +121,22 @@
           <div class="pledge-split-readout">
             <div class="readout">
               <span class="micro-label">TO THE FRONT LINES (<span id="labelPctCharity">90%</span>)</span>
-              <span class="readout-num readout-red" id="split90">$90.00</span>
+              <span class="readout-num readout-red" id="split90">$135.00</span>
             </div>
             <div class="readout">
               <span class="micro-label">RUNS CORRECTIONAL (<span id="labelPctCorr">10%</span>)</span>
-              <span class="readout-num" id="split10">$10.00</span>
+              <span class="readout-num" id="split10">$15.00</span>
             </div>
           </div>
 
           <button class="btn btn-primary btn-block" id="pledgeBtn" type="button">
-            Pledge <span id="pledgeBtnAmount">$100</span>
+            Pledge <span id="pledgeBtnAmount">$150</span>
           </button>
           <p class="fine-print">Payment processing to be integrated (Stripe planned). This is a working prototype.</p>
         </div>
 
         <div class="panel impact-panel">
-          <span class="micro-label">PROJECTED IMPACT OF <span id="impactBase">$90.00</span> DEPLOYED</span>
+          <span class="micro-label">PROJECTED IMPACT OF <span id="impactBase">$135.00</span> DEPLOYED</span>
           <ul class="impact-list" id="impactList">
             <li>
               <span class="impact-num" data-impact="aftercare">2.0</span>

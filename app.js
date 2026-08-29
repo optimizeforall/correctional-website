@@ -9,7 +9,7 @@
 /* ---------- pledge checkpoints ---------- */
 
 const MIN_PLEDGE = 50;
-const DEFAULT_PLEDGE = 100;
+const DEFAULT_PLEDGE = 150;
 const MAX_PLEDGE = 10000;
 const DEFAULT_CHARITY_PCT = 90;
 
@@ -279,7 +279,7 @@ function buildTicks() {
 
   const minTick = `<span class="slider-tick slider-tick--major" style="left:0%"></span>`;
   const recPct = (amountToPosition(DEFAULT_PLEDGE) * 100).toFixed(4);
-  const recMark = `<span class="slider-mark" style="left:${recPct}%" title="Recommended $100"></span>`;
+  const recMark = `<span class="slider-mark" style="left:${recPct}%" title="Recommended $150"></span>`;
 
   track.insertAdjacentHTML("afterbegin", minTick + ticks + recMark);
 
