@@ -275,7 +275,7 @@ strong { color: var(--white); }
   background-clip: padding-box;
   border-left: 1px solid var(--line);
 }
-.split-90:hover { background: #ff2438; }
+.split-90:hover { background: #b30017; }
 .split-10:hover { background: #1e1e1e; }
 
 .split-num { font-family: var(--num); font-weight: 500; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
@@ -905,7 +905,7 @@ input[type="range"]::-moz-range-thumb {
 
 .rib-bar {
   display: flex;
-  gap: 1px;
+  gap: 0;
   height: 12px;
 }
 
@@ -947,6 +947,10 @@ input[type="range"]::-moz-range-thumb {
     transparent 5px
   );
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+
+.rib-seg.rib-fill--unallocated {
+  box-shadow: none;
 }
 
 .rib-chip.rib-fill--unallocated {
@@ -1395,7 +1399,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .feed-name {
-  color: var(--white);
+  color: var(--white-dim);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1594,6 +1598,12 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (max-width: 860px) {
+  /* Native scroll on mobile — custom smooth scroll is desktop-only */
+  .smooth-content {
+    position: static;
+    will-change: auto;
+  }
+
   .pledge-grid { grid-template-columns: 1fr; }
   .stat-grid, .org-grid { grid-template-columns: 1fr; }
   .org-stats { grid-template-columns: 1fr; }

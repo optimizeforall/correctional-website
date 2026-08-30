@@ -415,7 +415,7 @@ $("pledgeBtn").addEventListener("click", () => {
 const TOTAL_RAISED = 487230;
 const OPERATIONS_USD = 48723;
 const OPERATIONS_NARRATIVE =
-  "Payment processing, hosting, accountability software, and one part-time administrator. Every operational dollar is itemized here because you deserve to know.";
+  "Payment processing, hosting, accountability software, Instagram / Facebook / YouTube ads to gain members, and one part-time administrator. Every operational dollar is itemized here because you deserve to know.";
 const UNALLOCATED_NARRATIVE =
   "Pledged in the last 45 days and not yet granted. Funds are disbursed to partners quarterly after due diligence. Nothing is held longer than one quarter.";
 
@@ -878,29 +878,25 @@ function initMotion() {
   const headerH = () => document.querySelector(".site-header")?.offsetHeight || 56;
   if (!content) return;
 
-  /* Native wheel/scrollbar still jumps window.scrollY (Windows mouse
-     notches). We never hijack the wheel. Instead the page is position:fixed
-     and we lerp it toward scrollY — that's the smoothness. */
+  /* Desktop only (matches styles.css 860px). Native wheel/scrollbar still
+     jumps window.scrollY; the page is position:fixed and we lerp toward
+     scrollY. On mobile we leave native scrolling alone. */
+  const DESKTOP_MQ = window.matchMedia("(min-width: 861px)");
   const DEPTH = 0.82;
   const LERP = 0.085;
 
-  function setSpacer() {
-    document.body.style.height = content.scrollHeight + "px";
-  }
-  setSpacer();
-  if (window.ResizeObserver) {
-    new ResizeObserver(setSpacer).observe(content);
-  }
-  window.addEventListener("resize", setSpacer);
-
+  let enabled = false;
+  let rafId = 0;
   let current = window.scrollY;
   let target = window.scrollY;
 
-  window.addEventListener("scroll", () => {
-    target = window.scrollY;
-  }, { passive: true });
+  function setSpacer() {
+    if (!enabled) return;
+    document.body.style.height = content.scrollHeight + "px";
+  }
 
   function tick() {
+    if (!enabled) return;
     current += (target - current) * LERP;
     if (Math.abs(target - current) < 0.15) current = target;
 
@@ -908,11 +904,57 @@ function initMotion() {
     if (heroGrid) {
       heroGrid.style.transform = `translate3d(0, ${current * DEPTH}px, 0)`;
     }
-    requestAnimationFrame(tick);
+    rafId = requestAnimationFrame(tick);
   }
-  requestAnimationFrame(tick);
+
+  function enable() {
+    if (enabled) return;
+    enabled = true;
+    current = window.scrollY;
+    target = window.scrollY;
+    setSpacer();
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function disable() {
+    if (!enabled) return;
+    enabled = false;
+    cancelAnimationFrame(rafId);
+    rafId = 0;
+    document.body.style.height = "";
+    content.style.transform = "";
+    if (heroGrid) heroGrid.style.transform = "";
+  }
+
+  function syncMode() {
+    if (DESKTOP_MQ.matches) enable();
+    else disable();
+  }
+
+  if (window.ResizeObserver) {
+    new ResizeObserver(setSpacer).observe(content);
+  }
+  window.addEventListener("resize", setSpacer);
+  window.addEventListener("scroll", () => {
+    if (!enabled) return;
+    target = window.scrollY;
+  }, { passive: true });
+
+  if (typeof DESKTOP_MQ.addEventListener === "function") {
+    DESKTOP_MQ.addEventListener("change", syncMode);
+  } else {
+    DESKTOP_MQ.addListener(syncMode);
+  }
+  syncMode();
 
   window.__smoothScrollTo = (el, block) => {
+    if (!enabled) {
+      el.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: block === "nearest" ? "nearest" : "start"
+      });
+      return;
+    }
     const topGap = headerH() + 12;
     const rect = el.getBoundingClientRect();
     let y;
