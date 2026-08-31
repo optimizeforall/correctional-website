@@ -1032,8 +1032,9 @@ initMotion();
 initHeroVerses();
 
 function initHeroVerses() {
+  const root = $("heroVerse");
   const track = $("heroVerseTrack");
-  if (!track) return;
+  if (!root || !track) return;
 
   const verses = [
     {
@@ -1041,16 +1042,18 @@ function initHeroVerses() {
       cite: "Psalm 82:3-4"
     },
     {
-      quote: "Speak up for those who cannot speak for themselves\u2026 defend the rights of the poor and needy.",
-      cite: "Proverbs 31:8-9"
+      quote: "Speak up for those who cannot speak for themselves; ensure justice for those being crushed. Yes, speak up for the poor and helpless, and see that they get justice.",
+      cite: "Proverbs 31:8-9",
+      version: "NLT"
     },
     {
       quote: "Rescue those being led away to death; hold back those staggering toward slaughter.",
       cite: "Proverbs 24:11"
     },
     {
-      quote: "He has sent me to bind up the brokenhearted, to proclaim freedom for the captives and release from darkness for the prisoners.",
-      cite: "Isaiah 61:1"
+      quote: "He has sent me to comfort the brokenhearted and to proclaim that captives will be released and prisoners will be freed.",
+      cite: "Isaiah 61:1",
+      version: "NLT"
     },
     {
       quote: "I discipline my body and keep it under control, lest after preaching to others I myself should be disqualified.",
@@ -1067,36 +1070,166 @@ function initHeroVerses() {
     {
       quote: "No discipline seems pleasant at the time, but painful. Later on, however, it produces a harvest of righteousness and peace for those who have been trained by it.",
       cite: "Hebrews 12:11"
+    },
+    {
+      quote: "Religion that is pure and undefiled before God the Father is this: to visit orphans and widows in their affliction, and to keep oneself unstained from the world.",
+      cite: "James 1:27",
+      version: "ESV"
+    },
+    {
+      quote: "Flee from sexual immorality\u2026 You are not your own, for you were bought with a price. So glorify God in your body.",
+      cite: "1 Corinthians 6:18-20",
+      version: "ESV"
     }
   ];
 
-  const gatewayUrl = (cite) =>
+  const gatewayUrl = (v) =>
     "https://www.biblegateway.com/passage/?search=" +
-    encodeURIComponent(cite) +
-    "&version=NIV";
+    encodeURIComponent(v.cite) +
+    "&version=" +
+    encodeURIComponent(v.version || "NIV");
 
   const itemHtml = (v, set) => `
     <div class="hero-verse-item"${set === 1 ? ' aria-hidden="true"' : ""}>
-      <a class="hero-verse-block" href="${gatewayUrl(v.cite)}" target="_blank" rel="noopener noreferrer"${set === 1 ? ' tabindex="-1"' : ""}>
+      <div class="hero-verse-block">
         <p class="hero-verse-quote">${v.quote}</p>
-        <cite class="hero-verse-cite">${v.cite}</cite>
-      </a>
+        <a class="hero-verse-cite" href="${gatewayUrl(v)}" target="_blank" rel="noopener noreferrer" draggable="false"${set === 1 ? ' tabindex="-1"' : ""}>${v.cite}</a>
+      </div>
     </div>`;
 
-  /* Two identical sets so translateX(-50%) loops without a jump. */
   track.innerHTML =
     verses.map((v) => itemHtml(v, 0)).join("") +
     verses.map((v) => itemHtml(v, 1)).join("");
 
-  /* Pace by content width so longer screens still feel slow (~28px/s). */
-  const applySpeed = () => {
-    const half = track.scrollWidth / 2;
-    if (!half) return;
-    const seconds = Math.max(70, Math.round(half / 28));
-    track.style.animationDuration = seconds + "s";
-  };
+  const AUTO_PX_PER_SEC = -22;
+  const DRAG_THRESHOLD = 8;
+  const FRICTION = 2.4; // 1/s exponential decay after throw
+  const SETTLE = 8; // resume auto-scroll below this |px/s|
+  const MAX_THROW = 2400;
 
-  applySpeed();
-  window.addEventListener("resize", applySpeed);
+  let loopW = 0;
+  let x = 0;
+  let vel = AUTO_PX_PER_SEC;
+  let dragging = false;
+  let dragged = false;
+  let pointerId = null;
+  let lastClientX = 0;
+  let lastT = 0;
+  let samples = [];
+  let raf = 0;
+  let prevT = 0;
+
+  function measure() {
+    loopW = track.scrollWidth / 2;
+  }
+
+  function wrap() {
+    if (loopW <= 0) return;
+    while (x <= -loopW) x += loopW;
+    while (x > 0) x -= loopW;
+  }
+
+  function paint() {
+    wrap();
+    track.style.transform = "translate3d(" + x + "px,0,0)";
+  }
+
+  function sampleVelocity() {
+    if (samples.length < 2) return 0;
+    const newest = samples[samples.length - 1];
+    let oldest = samples[0];
+    for (let i = samples.length - 2; i >= 0; i--) {
+      if (newest.t - samples[i].t > 80) {
+        oldest = samples[i];
+        break;
+      }
+      oldest = samples[i];
+    }
+    const dt = newest.t - oldest.t;
+    if (dt < 1) return 0;
+    return ((newest.x - oldest.x) / dt) * 1000;
+  }
+
+  function tick(now) {
+    if (!prevT) prevT = now;
+    const dt = Math.min(40, now - prevT) / 1000;
+    prevT = now;
+
+    if (!dragging) {
+      if (Math.abs(vel - AUTO_PX_PER_SEC) > 0.5) {
+        vel *= Math.exp(-FRICTION * dt);
+        if (Math.abs(vel) < SETTLE) vel = AUTO_PX_PER_SEC;
+      } else {
+        vel = AUTO_PX_PER_SEC;
+      }
+      x += vel * dt;
+      paint();
+    }
+
+    raf = requestAnimationFrame(tick);
+  }
+
+  root.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0 && e.pointerType === "mouse") return;
+    dragging = true;
+    dragged = false;
+    pointerId = e.pointerId;
+    lastClientX = e.clientX;
+    lastT = performance.now();
+    samples = [{ x: e.clientX, t: lastT }];
+    vel = 0;
+    root.classList.add("is-dragging");
+    try { root.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
+  });
+
+  root.addEventListener("pointermove", (e) => {
+    if (!dragging || e.pointerId !== pointerId) return;
+    const now = performance.now();
+    const dx = e.clientX - lastClientX;
+    if (Math.abs(dx) > 0) {
+      x += dx;
+      paint();
+      if (Math.abs(e.clientX - samples[0].x) > DRAG_THRESHOLD) dragged = true;
+    }
+    lastClientX = e.clientX;
+    lastT = now;
+    samples.push({ x: e.clientX, t: now });
+    while (samples.length > 8) samples.shift();
+    if (dragged) e.preventDefault();
+  });
+
+  function endDrag(e) {
+    if (!dragging || (e && e.pointerId !== pointerId)) return;
+    dragging = false;
+    root.classList.remove("is-dragging");
+    const throwVel = sampleVelocity();
+    vel = Math.max(-MAX_THROW, Math.min(MAX_THROW, throwVel));
+    if (Math.abs(vel) < SETTLE) vel = AUTO_PX_PER_SEC;
+    pointerId = null;
+    samples = [];
+  }
+
+  root.addEventListener("pointerup", endDrag);
+  root.addEventListener("pointercancel", endDrag);
+  root.addEventListener("lostpointercapture", endDrag);
+
+  root.addEventListener("click", (e) => {
+    if (!dragged) return;
+    e.preventDefault();
+    e.stopPropagation();
+  }, true);
+
+  root.addEventListener("dragstart", (e) => e.preventDefault());
+
+  measure();
+  paint();
+  raf = requestAnimationFrame(tick);
+
+  window.addEventListener("resize", () => {
+    const before = loopW;
+    measure();
+    if (before > 0 && loopW > 0) x = (x / before) * loopW;
+    paint();
+  });
 }
 
