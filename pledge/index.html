@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join — Correctional</title>
+  <meta name="description" content="Pledge, commit, and join a cohort of four men fighting pornography and lust. Your pledge funds documented anti-trafficking work." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="../assets/logo-cross-plus.png" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body class="subpage pledge-page" data-page="pledge">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="header-mark" aria-label="Correctional home">
+        <span class="wordmark wordmark--small">CORREC<svg class="cross" viewBox="0 0 60 100" aria-hidden="true"><rect x="22" y="0" width="16" height="100"/><rect x="0" y="22" width="60" height="16"/></svg>IONAL</span>
+      </a>
+      <button class="nav-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="header-nav" id="site-nav">
+        <a href="index.html" aria-current="page">Pledge</a>
+        <a href="../index.html#allocation">Transparency</a>
+        <a href="../index.html#donors">Pledges</a>
+        <a href="../index.html#evidence">Who it helps</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../organizations.html">Organizations</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="subpage-main">
+
+    <!-- Intro -->
+    <section class="section pledge-intro">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-index">JOIN</span>
+          <h2>One path in. Four steps.</h2>
+          <p class="section-sub pledge-lede">
+            Correctional is a Christ-centered community for men fighting pornography, lust, and sin.
+            Your battle funds someone else's freedom. This page is everything you need to join.
+          </p>
+        </div>
+
+        <nav class="pledge-path" aria-label="How joining works">
+          <a class="pledge-path-step" href="#pledge">
+            <span class="pledge-path-num">01</span>
+            <span class="pledge-path-label">Pledge</span>
+          </a>
+          <span class="pledge-path-arrow" aria-hidden="true">→</span>
+          <a class="pledge-path-step" href="#covenant">
+            <span class="pledge-path-num">02</span>
+            <span class="pledge-path-label">Covenant</span>
+          </a>
+          <span class="pledge-path-arrow" aria-hidden="true">→</span>
+          <a class="pledge-path-step" href="#cohort">
+            <span class="pledge-path-num">03</span>
+            <span class="pledge-path-label">Cohort</span>
+          </a>
+          <span class="pledge-path-arrow" aria-hidden="true">→</span>
+          <a class="pledge-path-step" href="#weekly">
+            <span class="pledge-path-num">04</span>
+            <span class="pledge-path-label">Weekly</span>
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Pledge -->
+    <section class="section" id="pledge">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-index">01</span>
+          <h2>The Pledge</h2>
+          <p class="section-sub">Minimum $50. Recommended $150. You choose the amount — we route it to the fight.</p>
+        </div>
+
+        <p class="pledge-phase-note panel">
+          <span class="micro-label">CURRENT QUARTER</span>
+          100% of every pledge goes directly to <strong>International Justice Mission</strong> while Correctional is in launch phase.
+          You do not pick the charity — we do, and we publish where every dollar went.
+          <a href="../organizations.html">See partner organizations →</a>
+        </p>
+
+        <div class="pledge-grid">
+          <div class="panel pledge-panel">
+            <div class="pledge-amount-row">
+              <span class="micro-label">YOUR PLEDGE</span>
+              <div class="pledge-amount" id="pledgeAmount">$150</div>
+              <button class="btn-ghost" id="otherToggle" type="button">Other / specific amount</button>
+            </div>
+
+            <div class="custom-amount" id="customAmountWrap" hidden>
+              <label class="micro-label" for="customAmount">SPECIFIC AMOUNT (MIN $50)</label>
+              <div class="custom-amount-row">
+                <span class="custom-currency">$</span>
+                <input type="number" id="customAmount" min="50" step="1" placeholder="150" />
+                <button class="btn btn-secondary" id="customApply" type="button">Set</button>
+              </div>
+            </div>
+
+            <div class="slider-wrap">
+              <div class="slider-track-area" id="sliderTrackArea">
+                <div class="slider-track" id="sliderTrack">
+                  <div
+                    class="slider-thumb"
+                    id="pledgeThumb"
+                    role="slider"
+                    tabindex="0"
+                    aria-label="Pledge amount"
+                    aria-valuemin="50"
+                    aria-valuemax="10000"
+                    aria-valuenow="150"
+                    aria-valuetext="$150"
+                  ></div>
+                </div>
+              </div>
+              <div class="slider-labels" id="sliderLabels" aria-hidden="true"></div>
+            </div>
+
+            <div class="pledge-split-readout pledge-split-readout--single">
+              <div class="readout">
+                <span class="micro-label">TO INTERNATIONAL JUSTICE MISSION</span>
+                <span class="readout-num readout-red" id="split90">$150.00</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-block" id="pledgeBtn" type="button">
+              Pledge <span id="pledgeBtnAmount">$150</span>
+            </button>
+            <p class="fine-print">Checkout connects to our donation page (Every.org — coming online this week).</p>
+          </div>
+
+          <div class="panel impact-panel">
+            <span class="micro-label">PROJECTED IMPACT OF <span id="impactBase">$150.00</span> DEPLOYED</span>
+            <ul class="impact-list" id="impactList">
+              <li>
+                <span class="impact-num" data-impact="aftercare">2.0</span>
+                <span class="impact-desc"><span data-impact-label="aftercare">Days of aftercare housing, food, and casework</span>
+                  <span class="impact-unit">@ $45 / DAY</span>
+                </span>
+              </li>
+              <li>
+                <span class="impact-num" data-impact="intercept">0.6</span>
+                <span class="impact-desc"><span data-impact-label="intercept">Border or transit interceptions</span>
+                  <span class="impact-unit">@ $150 / OPERATION</span>
+                </span>
+              </li>
+              <li>
+                <span class="impact-num" data-impact="hours">2.6</span>
+                <span class="impact-desc"><span data-impact-label="hours">Investigation hours</span>
+                  <span class="impact-unit">@ $35 / HOUR</span>
+                </span>
+              </li>
+              <li>
+                <span class="impact-num" data-impact="counsel">1.1</span>
+                <span class="impact-desc"><span data-impact-label="counsel">Trauma-informed counseling sessions</span>
+                  <span class="impact-unit">@ $80 / SESSION</span>
+                </span>
+              </li>
+              <li>
+                <span class="impact-num" data-impact="legal">1.5</span>
+                <span class="impact-desc"><span data-impact-label="legal">Hours of survivor legal casework</span>
+                  <span class="impact-unit">@ $60 / HOUR</span>
+                </span>
+              </li>
+              <li>
+                <span class="impact-num" data-impact="rescue">2.3%</span>
+                <span class="impact-desc"><span data-impact-label="rescue">Share of one documented rescue</span>
+                  <span class="impact-unit">@ $4,000 / PERSON</span>
+                </span>
+              </li>
+            </ul>
+            <p class="fine-print">Illustrative model, not a promise. <a href="../impact.html">How we estimate this →</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checkout note (shown when Every.org is not wired yet) -->
+    <section class="section section--tight" id="checkout">
+      <div class="container">
+        <div class="panel pledge-checkout-note">
+          <span class="micro-label">CHECKOUT</span>
+          <p>The pledge button above will open a secure donation page for International Justice Mission. Until that link is live, complete the signup below and we will send you the checkout link directly.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Covenant -->
+    <section class="section" id="covenant">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-index">02</span>
+          <h2>The Covenant</h2>
+          <p class="section-sub">Before your first weekly call, you purge what feeds the sin and commit to the fight.</p>
+        </div>
+
+        <div class="pledge-columns">
+          <div class="panel pledge-detail">
+            <span class="micro-label">THE PURGE</span>
+            <p class="pledge-detail-lede">Destroy or delete everything that keeps you bound — before your first weekly call.</p>
+            <ul class="pledge-list">
+              <li>Delete saved images, videos, and stashes on every device</li>
+              <li>Cancel subscriptions — OnlyFans, premium sites, apps</li>
+              <li>Unfollow accounts, creators, and triggers on social media</li>
+              <li>Remove photos of past relationships that pull you back</li>
+              <li>Turn on accountability software if you use it</li>
+            </ul>
+          </div>
+
+          <div class="panel pledge-detail">
+            <span class="micro-label">THE COMMITMENT</span>
+            <p class="pledge-detail-lede">Twelve weeks. Four men. Honest weekly calls. Goals counted forward, not backward.</p>
+            <ul class="pledge-list">
+              <li>Track days in prayer and days in the Word — not days since a slip</li>
+              <li>Show up to your cohort call every week, prepared and on time</li>
+              <li>Speak honestly about victory and failure; what is said stays in the room</li>
+              <li>Keep your pledge — minimum $50, recommended $150 per month</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cohort -->
+    <section class="section" id="cohort">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-index">03</span>
+          <h2>Your Cohort</h2>
+          <p class="section-sub">You are placed with three other men for a 12-week run. Same start date. Same standard.</p>
+        </div>
+
+        <div class="panel pledge-detail pledge-detail--wide">
+          <div class="cohort-facts">
+            <div class="cohort-fact">
+              <span class="cohort-fact-num">4</span>
+              <span class="cohort-fact-label">Men per cohort</span>
+            </div>
+            <div class="cohort-fact">
+              <span class="cohort-fact-num">12</span>
+              <span class="cohort-fact-label">Week commitment</span>
+            </div>
+            <div class="cohort-fact">
+              <span class="cohort-fact-num">1</span>
+              <span class="cohort-fact-label">Private Discord channel</span>
+            </div>
+          </div>
+          <p class="pledge-detail-body">
+            Cohorts start when four vetted men are ready — not on a rolling open door.
+            You will know your cohort mates by name before the first call.
+            If someone drops out, the group decides together whether to continue or pause.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Weekly -->
+    <section class="section" id="weekly">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-index">04</span>
+          <h2>Weekly Meetings</h2>
+          <p class="section-sub">One hour. Same day each week. Prayer, Scripture, honest accounting.</p>
+        </div>
+
+        <div class="pledge-columns">
+          <div class="panel pledge-detail">
+            <span class="micro-label">EACH CALL</span>
+            <ul class="pledge-list">
+              <li>Open in prayer — name what you are fighting and what you are building</li>
+              <li>Report days in the Word and days in prayer since last week</li>
+              <li>Confess slips without performance or competition</li>
+              <li>Set one concrete aim for the coming week</li>
+              <li>Close with prayer for each man by name</li>
+            </ul>
+          </div>
+
+          <div class="panel pledge-detail" id="next">
+            <span class="micro-label">WHAT HAPPENS NEXT</span>
+            <ol class="pledge-steps">
+              <li>Complete the signup form and covenant checkboxes</li>
+              <li>Make your pledge — receipt goes to your email automatically</li>
+              <li>Within 24 hours, receive your Discord invite</li>
+              <li>Get placed in a cohort of four when one is ready</li>
+              <li>First weekly call within two weeks of cohort formation</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Signup -->
+    <section class="section" id="signup">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-index">SIGN UP</span>
+          <h2>Tell us about you</h2>
+          <p class="section-sub">Complete this before your first cohort call. Takes about five minutes.</p>
+        </div>
+
+        <div class="panel pledge-signup">
+          <p class="pledge-detail-lede">The signup form asks for:</p>
+          <ul class="pledge-list pledge-list--compact">
+            <li>Name, email, and time zone</li>
+            <li>Why you are joining now — a short testimony</li>
+            <li>Your weekly availability for a 60-minute call</li>
+            <li>Covenant checkboxes — purge completed, commitment understood</li>
+          </ul>
+          <a class="btn btn-primary" href="#" id="signupBtn">Open signup form</a>
+          <p class="fine-print">Form link goes live this week. Questions: <a href="mailto:join@joincorrectional.com">join@joincorrectional.com</a></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="wordmark wordmark--small">CORREC<svg class="cross" viewBox="0 0 60 100" aria-hidden="true"><rect x="22" y="0" width="16" height="100"/><rect x="0" y="22" width="60" height="16"/></svg>IONAL</span>
+      <p class="footer-line">A Christ-centered program for men. 90% of every pledge fights human trafficking. 10% keeps the lights on. Nothing hidden.</p>
+      <p class="footer-verse">"You were bought at a price." &mdash; 1 Corinthians 6:20</p>
+    </div>
+  </footer>
+
+  <script src="../nav.js"></script>
+  <script src="../app.js"></script>
+</body>
+</html>

@@ -140,30 +140,28 @@ const btnAmountEl = $("pledgeBtnAmount");
 const split90El = $("split90");
 const split10El = $("split10");
 const impactBaseEl = $("impactBase");
-
-/* split control — every pledger sets Correctional's share (default 10%) */
-
 const splitSlider = $("splitSlider");
+const isPledgePage = document.body.dataset.page === "pledge";
+if (isPledgePage) charityPct = 100;
 
-splitSlider.addEventListener("input", () => {
-  charityPct = Number(splitSlider.value);
-  renderAmount();
-});
+function setText(id, text) {
+  const el = $(id);
+  if (el) el.textContent = text;
+}
 
 function renderAmount() {
-  $("splitPctCharity").textContent = charityPct + "%";
-  $("splitPctCorr").textContent = (100 - charityPct) + "%";
-
   const deployed = currentAmount * (charityPct / 100);
   const kept = currentAmount - deployed;
 
-  amountEl.textContent = fmtMoney(currentAmount);
-  btnAmountEl.textContent = fmtMoney(currentAmount);
-  split90El.textContent = fmtMoney(deployed, true);
-  split10El.textContent = fmtMoney(kept, true);
-  impactBaseEl.textContent = fmtMoney(deployed, true);
-  $("labelPctCharity").textContent = charityPct + "%";
-  $("labelPctCorr").textContent = (100 - charityPct) + "%";
+  setText("splitPctCharity", charityPct + "%");
+  setText("splitPctCorr", (100 - charityPct) + "%");
+  if (amountEl) amountEl.textContent = fmtMoney(currentAmount);
+  if (btnAmountEl) btnAmountEl.textContent = fmtMoney(currentAmount);
+  if (split90El) split90El.textContent = fmtMoney(deployed, true);
+  if (split10El) split10El.textContent = fmtMoney(kept, true);
+  if (impactBaseEl) impactBaseEl.textContent = fmtMoney(deployed, true);
+  setText("labelPctCharity", charityPct + "%");
+  setText("labelPctCorr", (100 - charityPct) + "%");
 
   setImpactTargets(deployed);
   updateThumb();
@@ -372,43 +370,72 @@ function initPledgeSlider() {
 
 /* custom / "other" amount */
 
-const otherToggle = $("otherToggle");
-const customWrap = $("customAmountWrap");
-const customInput = $("customAmount");
-const customApply = $("customApply");
+function initPledgeControls() {
+  if (!amountEl) return;
 
-otherToggle.addEventListener("click", () => {
-  customWrap.hidden = !customWrap.hidden;
-  if (!customWrap.hidden) customInput.focus();
-});
-
-function applyCustom() {
-  const v = Math.floor(Number(customInput.value));
-  if (!v || v < MIN_PLEDGE) {
-    customInput.value = MIN_PLEDGE;
-    currentAmount = MIN_PLEDGE;
-  } else {
-    currentAmount = v;
+  if (splitSlider) {
+    splitSlider.addEventListener("input", () => {
+      charityPct = Number(splitSlider.value);
+      renderAmount();
+    });
   }
-  renderAmount();
+
+  const otherToggle = $("otherToggle");
+  const customWrap = $("customAmountWrap");
+  const customInput = $("customAmount");
+  const customApply = $("customApply");
+
+  if (otherToggle && customWrap && customInput) {
+    otherToggle.addEventListener("click", () => {
+      customWrap.hidden = !customWrap.hidden;
+      if (!customWrap.hidden) customInput.focus();
+    });
+  }
+
+  function applyCustom() {
+    const v = Math.floor(Number(customInput.value));
+    if (!v || v < MIN_PLEDGE) {
+      customInput.value = MIN_PLEDGE;
+      currentAmount = MIN_PLEDGE;
+    } else {
+      currentAmount = v;
+    }
+    renderAmount();
+  }
+
+  if (customApply) customApply.addEventListener("click", applyCustom);
+  if (customInput) {
+    customInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") applyCustom();
+    });
+  }
+
+  const pledgeBtn = $("pledgeBtn");
+  if (!pledgeBtn) return;
+
+  pledgeBtn.addEventListener("click", () => {
+    if (isPledgePage) {
+      const checkoutUrl = document.body.dataset.checkoutUrl;
+      if (checkoutUrl) {
+        const url = checkoutUrl.replace("{amount}", String(currentAmount));
+        window.open(url, "_blank", "noopener,noreferrer");
+        scrollToEl($("next"));
+        return;
+      }
+      scrollToEl($("checkout"));
+      return;
+    }
+
+    addPledgeRow({ name: "You", amount: currentAmount, charityPct, minsAgo: 0 }, true);
+    pledgeBtn.textContent = "Pledge received — thank you, brother.";
+    pledgeBtn.disabled = true;
+    setTimeout(() => {
+      pledgeBtn.innerHTML = `Pledge <span id="pledgeBtnAmount">${fmtMoney(currentAmount)}</span>`;
+      pledgeBtn.disabled = false;
+    }, 4000);
+    scrollToEl($("donors"));
+  });
 }
-
-customApply.addEventListener("click", applyCustom);
-customInput.addEventListener("keydown", (e) => { if (e.key === "Enter") applyCustom(); });
-
-/* pledge button — prototype confirmation */
-
-$("pledgeBtn").addEventListener("click", () => {
-  addPledgeRow({ name: "You", amount: currentAmount, charityPct, minsAgo: 0 }, true);
-  const btn = $("pledgeBtn");
-  btn.textContent = "Pledge received — thank you, brother.";
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.innerHTML = `Pledge <span id="pledgeBtnAmount">${fmtMoney(currentAmount)}</span>`;
-    btn.disabled = false;
-  }, 4000);
-  scrollToEl($("donors"));
-});
 
 /* ---------- allocation data (gauntlet ledger) ---------- */
 
@@ -849,12 +876,21 @@ if (pledgerRows) {
    init
    ============================================================ */
 
-buildTicks();
-initPledgeSlider();
-renderAmount();
-buildAllocBar();
-renderTotals();
-renderPledgers();
+if (amountEl) {
+  buildTicks();
+  initPledgeSlider();
+  initPledgeControls();
+  renderAmount();
+}
+
+if ($("rib")) {
+  buildAllocBar();
+  renderTotals();
+}
+
+if ($("pledgerRows")) {
+  renderPledgers();
+}
 
 /* ============================================================
    smooth scroll + hero grid parallax

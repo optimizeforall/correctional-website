@@ -1504,6 +1504,197 @@ input[type="range"]::-moz-range-thumb {
   padding-top: 56px;
 }
 
+/* ---------- pledge page ---------- */
+
+.pledge-page .section--tight {
+  padding-top: 0;
+}
+
+.pledge-lede {
+  max-width: 52ch;
+}
+
+.pledge-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 8px;
+}
+
+.pledge-path-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--white-dim);
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.pledge-path-step:hover {
+  border-color: var(--red);
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.pledge-path-num {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--red);
+}
+
+.pledge-path-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pledge-path-arrow {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--white-faint);
+}
+
+.pledge-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.pledge-detail {
+  padding: 24px;
+}
+
+.pledge-detail--wide {
+  padding: 28px 24px;
+}
+
+.pledge-detail-lede {
+  margin-top: 10px;
+  color: var(--white-dim);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  max-width: 58ch;
+}
+
+.pledge-detail-body {
+  margin-top: 20px;
+  color: var(--white-dim);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+.pledge-list {
+  margin-top: 16px;
+  padding-left: 1.1em;
+  color: var(--white-dim);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+
+.pledge-list li + li {
+  margin-top: 8px;
+}
+
+.pledge-list--compact {
+  margin-top: 12px;
+}
+
+.pledge-steps {
+  margin-top: 16px;
+  padding-left: 1.2em;
+  color: var(--white-dim);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+
+.pledge-steps li + li {
+  margin-top: 10px;
+}
+
+.cohort-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.cohort-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cohort-fact-num {
+  font-family: var(--num);
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--red);
+  line-height: 1;
+}
+
+.cohort-fact-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white-faint);
+}
+
+.pledge-phase-note {
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  font-size: var(--text-sm);
+  color: var(--white-dim);
+  line-height: 1.65;
+}
+
+.pledge-phase-note strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.pledge-phase-note a {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--white-dim);
+}
+
+.pledge-split-readout--single {
+  grid-template-columns: 1fr;
+}
+
+.pledge-checkout-note {
+  padding: 20px 24px;
+  font-size: var(--text-sm);
+  color: var(--white-dim);
+  line-height: 1.65;
+}
+
+.pledge-signup {
+  padding: 28px 24px;
+  max-width: 560px;
+}
+
+.pledge-signup .btn {
+  margin-top: 24px;
+}
+
+@media (max-width: 860px) {
+  .pledge-columns { grid-template-columns: 1fr; }
+  .cohort-facts { grid-template-columns: 1fr; gap: 20px; }
+  .pledge-path-arrow { display: none; }
+  .pledge-path { gap: 8px; }
+  .pledge-path-step { flex: 1 1 calc(50% - 4px); min-width: 0; }
+}
+
 .stat-page {
   max-width: 720px;
   padding: 64px 24px 96px;
