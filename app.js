@@ -451,6 +451,7 @@ const CHARITIES = [
     id: "ijm",
     name: "International Justice Mission",
     shortName: "IJM",
+    url: "https://www.ijm.org",
     color: "#e5232e",
     allocatedUsd: 152000,
     focus: "Rescue operations and casework with local law enforcement",
@@ -477,6 +478,7 @@ const CHARITIES = [
     id: "destiny-rescue",
     name: "Destiny Rescue",
     shortName: "Destiny Rescue",
+    url: "https://www.destinyrescue.org",
     color: "#b3121c",
     allocatedUsd: 118400,
     focus: "Covert rescue of children from sexual exploitation",
@@ -503,6 +505,7 @@ const CHARITIES = [
     id: "a21",
     name: "The A21 Campaign",
     shortName: "A21",
+    url: "https://www.a21.org",
     color: "#ffffff",
     allocatedUsd: 87300,
     focus: "Survivor aftercare and trafficking hotlines",
@@ -528,6 +531,7 @@ const CHARITIES = [
     id: "hope-for-justice",
     name: "Hope for Justice",
     shortName: "Hope for Justice",
+    url: "https://hopeforjustice.org",
     color: "#8c8c8c",
     allocatedUsd: 46000,
     focus: "Investigative hubs and victim identification",
@@ -662,7 +666,9 @@ function detailHtml(p) {
     <article class="rib-card" aria-label="${p.name} details">
       <header class="rib-card-head">
         <span class="rib-chip ${fillClass(p)}" style="${chipStyle(p)}" aria-hidden="true"></span>
-        <h3 class="rib-card-title">${p.name}</h3>
+        <h3 class="rib-card-title">${p.charity && p.charity.url
+          ? `<a href="${p.charity.url}" target="_blank" rel="noopener noreferrer">${p.name}</a>`
+          : p.name}</h3>
         <div class="rib-card-amount">
           <span class="rib-card-amt">${fmtMoney(p.amountUsd)}</span>
           <span class="rib-card-pct">${pctOf(p.id)}% of ${fmtMoney(TOTAL_RAISED)}</span>
@@ -1023,4 +1029,74 @@ function initMotion() {
 }
 
 initMotion();
+initHeroVerses();
+
+function initHeroVerses() {
+  const track = $("heroVerseTrack");
+  if (!track) return;
+
+  const verses = [
+    {
+      quote: "Defend the weak and the fatherless; uphold the cause of the poor and the oppressed. Rescue the weak and the needy; deliver them from the hand of the wicked.",
+      cite: "Psalm 82:3-4"
+    },
+    {
+      quote: "Speak up for those who cannot speak for themselves\u2026 defend the rights of the poor and needy.",
+      cite: "Proverbs 31:8-9"
+    },
+    {
+      quote: "Rescue those being led away to death; hold back those staggering toward slaughter.",
+      cite: "Proverbs 24:11"
+    },
+    {
+      quote: "He has sent me to bind up the brokenhearted, to proclaim freedom for the captives and release from darkness for the prisoners.",
+      cite: "Isaiah 61:1"
+    },
+    {
+      quote: "I discipline my body and keep it under control, lest after preaching to others I myself should be disqualified.",
+      cite: "1 Corinthians 9:27"
+    },
+    {
+      quote: "Like a city whose walls are broken through is a man who lacks self-control.",
+      cite: "Proverbs 25:28"
+    },
+    {
+      quote: "For God gave us a spirit not of fear but of power and love and self-control.",
+      cite: "2 Timothy 1:7"
+    },
+    {
+      quote: "No discipline seems pleasant at the time, but painful. Later on, however, it produces a harvest of righteousness and peace for those who have been trained by it.",
+      cite: "Hebrews 12:11"
+    }
+  ];
+
+  const gatewayUrl = (cite) =>
+    "https://www.biblegateway.com/passage/?search=" +
+    encodeURIComponent(cite) +
+    "&version=NIV";
+
+  const itemHtml = (v, set) => `
+    <div class="hero-verse-item"${set === 1 ? ' aria-hidden="true"' : ""}>
+      <a class="hero-verse-block" href="${gatewayUrl(v.cite)}" target="_blank" rel="noopener noreferrer"${set === 1 ? ' tabindex="-1"' : ""}>
+        <p class="hero-verse-quote">${v.quote}</p>
+        <cite class="hero-verse-cite">${v.cite}</cite>
+      </a>
+    </div>`;
+
+  /* Two identical sets so translateX(-50%) loops without a jump. */
+  track.innerHTML =
+    verses.map((v) => itemHtml(v, 0)).join("") +
+    verses.map((v) => itemHtml(v, 1)).join("");
+
+  /* Pace by content width so longer screens still feel slow (~28px/s). */
+  const applySpeed = () => {
+    const half = track.scrollWidth / 2;
+    if (!half) return;
+    const seconds = Math.max(70, Math.round(half / 28));
+    track.style.animationDuration = seconds + "s";
+  };
+
+  applySpeed();
+  window.addEventListener("resize", applySpeed);
+}
 
