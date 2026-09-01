@@ -745,6 +745,14 @@ function buildAllocBar() {
 
   function hideTip() {
     if (tip) tip.hidden = true;
+    // Keep the open partition highlighted — tip dismiss must not undo the pop
+    if (openId) {
+      bar.classList.add("is-dimming");
+      root.querySelectorAll(".rib-seg").forEach((el) => {
+        el.classList.toggle("is-hot", el.dataset.id === openId);
+      });
+      return;
+    }
     bar.classList.remove("is-dimming");
     root.querySelectorAll(".rib-seg").forEach((el) => el.classList.remove("is-hot"));
   }
@@ -759,6 +767,10 @@ function buildAllocBar() {
     root.querySelectorAll(".rib-legend-item").forEach((el) => {
       el.classList.toggle("is-active", el.dataset.id === openId);
     });
+    root.querySelectorAll(".rib-seg").forEach((el) => {
+      el.classList.toggle("is-hot", el.dataset.id === openId);
+    });
+    bar.classList.toggle("is-dimming", Boolean(openId));
     if (openId) {
       clip.innerHTML = detailHtml(partition(openId));
       detail.classList.add("is-open");

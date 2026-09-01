@@ -60,6 +60,35 @@
     </div>
   </section>
 
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section section--band" id="how-it-works">
+    <div class="container">
+      <span class="micro-label">HOW IT WORKS</span>
+      <nav class="pledge-path pledge-path--home" aria-label="How joining works">
+        <a class="pledge-path-step" href="pledge/#pledge">
+          <span class="pledge-path-top"><span class="pledge-path-num">01</span><span class="pledge-path-label">Pledge</span></span>
+          <span class="pledge-path-desc">A monthly pledge — min $50 — routed to the fight against trafficking</span>
+        </a>
+        <span class="pledge-path-arrow" aria-hidden="true">→</span>
+        <a class="pledge-path-step" href="pledge/#covenant">
+          <span class="pledge-path-top"><span class="pledge-path-num">02</span><span class="pledge-path-label">Covenant</span></span>
+          <span class="pledge-path-desc">Purge what feeds the sin and commit to the standard</span>
+        </a>
+        <span class="pledge-path-arrow" aria-hidden="true">→</span>
+        <a class="pledge-path-step" href="pledge/#cohort">
+          <span class="pledge-path-top"><span class="pledge-path-num">03</span><span class="pledge-path-label">Cohort</span></span>
+          <span class="pledge-path-desc">Placed with three other men — same start date, same standard</span>
+        </a>
+        <span class="pledge-path-arrow" aria-hidden="true">→</span>
+        <a class="pledge-path-step" href="pledge/#mission">
+          <span class="pledge-path-top"><span class="pledge-path-num">04</span><span class="pledge-path-label">Mission</span></span>
+          <span class="pledge-path-desc">140 days of weekly calls, standing orders, and formation</span>
+        </a>
+      </nav>
+      <a class="pledge-path-more" href="pledge/">Learn how it works →</a>
+    </div>
+  </section>
+
   <!-- ============ PLEDGE ============ -->
   <section class="section" id="pledge">
     <div class="container">
@@ -114,8 +143,14 @@
             <div class="split-control-body">
               <input type="range" id="splitSlider" min="90" max="100" step="1" value="90" aria-label="Percent of pledge going to the charities" />
               <div class="split-readline">
-                <span>TO THE CHARITIES <b id="splitPctCharity">90%</b></span>
-                <span>RUNS CORRECTIONAL <b id="splitPctCorr">10%</b></span>
+                <div class="split-side">
+                  <span>TO THE CHARITIES</span>
+                  <b id="splitPctCharity">90%</b>
+                </div>
+                <div class="split-side">
+                  <span>RUNS CORRECTIONAL</span>
+                  <b id="splitPctCorr">10%</b>
+                </div>
               </div>
               <p class="fine-print split-control-note">You decide Correctional's share — take it from the default 10% down to 0% and send everything to the fight.</p>
             </div>

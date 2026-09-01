@@ -1,6 +1,6 @@
 # Correctional — done and remaining
 
-Last updated: 2026-08-30
+Last updated: 2026-08-31
 
 ## Done
 
@@ -18,8 +18,9 @@ Last updated: 2026-08-30
 - Pushes to `master` deploy the site
 
 ### `/pledge` (local — not all of this is pushed yet)
-- Dedicated page: **Pledge → Covenant → Cohort → Weekly**
-- Covenant (purge + commitment), cohort of 4 / 12 weeks, weekly call format
+- Dedicated page: **Pledge → Covenant → Cohort → Mission** (informational sections + one "Begin" decision section at the bottom)
+- Covenant (purge + commitment + answer when a brother calls), cohort of 4 / 140-day mission, weekly call format, standing orders, day-140 debrief
+- Homepage "How it works" strip after the hero linking to the pledge page anchors
 - Launch-phase copy: 100% to IJM until Correctional can legally collect
 - Nav **Pledge** links point to `/pledge/`
 - `app.js` works on both homepage and `/pledge`
@@ -29,9 +30,9 @@ Last updated: 2026-08-30
 ## Remaining
 
 ### This week — ship the page
-- [ ] Commit and push `/pledge` plus related nav/CSS/`app.js` so live matches local
-- [ ] Confirm HTTPS lock + **Enforce HTTPS** in GitHub Pages settings
-- [ ] Smoke-test live: nav, slider, transparency, mobile menu, `/pledge`
+- [x] Commit and push `/pledge` plus related nav/CSS/`app.js` so live matches local
+- [x] HTTPS live: `http` → `https` 301; www → apex; `/pledge/` 200 (confirm **Enforce HTTPS** checkbox in Pages UI if you have not)
+- [x] Smoke-test live (2026-08-31): nav → `/pledge`, slider, transparency ribbon expand, mobile menu
 
 ### Money — pick a path, then execute it
 
@@ -75,8 +76,8 @@ Last updated: 2026-08-30
 
 | Night | Focus |
 |---|---|
-| **Next** | Push `/pledge`, HTTPS, smoke test |
-| **2** | Choose A or B for money; start entity *or* wire charity-direct checkout |
+| **Tonight** | Choose A or B for money; if B: Every.org/IJM URL → `data-checkout-url` + homepage fine print |
+| **2** | If A: start entity / bank; if B already wired: signup form + Discord skeleton |
 | **3** | Signup form + Discord skeleton |
 | **4** | Recruit cohort #1; first call |
 | **5** | IG live |
