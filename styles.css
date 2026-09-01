@@ -683,6 +683,14 @@ a.stat-card:focus-visible {
 
 .btn:hover { background: #b30017; border-color: #b30017; }
 
+.btn:disabled,
+.btn[disabled] {
+  background: var(--black-3);
+  border-color: var(--line);
+  color: var(--white-faint);
+  cursor: not-allowed;
+}
+
 .btn-secondary {
   background: transparent;
   border-color: var(--line);
@@ -1861,6 +1869,7 @@ input[type="range"]::-moz-range-thumb {
 
 .pledge-checkout-note {
   padding: 20px 24px;
+  margin-top: 24px;
   font-size: var(--text-sm);
   color: var(--white-dim);
   line-height: 1.65;
@@ -1868,11 +1877,120 @@ input[type="range"]::-moz-range-thumb {
 
 .pledge-signup {
   padding: 28px 24px;
-  max-width: 560px;
 }
 
 .pledge-signup .btn {
   margin-top: 24px;
+}
+
+.join-form {
+  padding: 28px 24px;
+}
+
+.join-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 24px;
+  margin-top: 20px;
+}
+
+.join-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.join-field--wide {
+  grid-column: 1 / -1;
+}
+
+.join-field input[type="text"],
+.join-field input[type="email"],
+.join-field select,
+.join-field textarea {
+  width: 100%;
+  background: var(--black);
+  border: 1px solid var(--line);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 1rem;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.join-field textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.5;
+}
+
+.join-field input:focus,
+.join-field select:focus,
+.join-field textarea:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+.join-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.join-window-label {
+  margin-top: 12px;
+}
+
+.join-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--white-dim);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.join-check--block {
+  display: flex;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.join-covenant-lede {
+  margin: 8px 0 0;
+  max-width: 52ch;
+  color: var(--white-dim);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.join-covenant {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.join-covenant .join-check--block {
+  margin-top: 0;
+  align-items: flex-start;
+}
+
+.join-covenant .join-check input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.join-check input {
+  accent-color: var(--red);
+}
+
+.signup-page #moneyBlock {
+  margin-top: 32px;
+}
+
+.signup-page .pledge-columns {
+  margin-bottom: 8px;
 }
 
 .pledge-path-step--begin {
@@ -1900,6 +2018,115 @@ input[type="range"]::-moz-range-thumb {
 .pledge-begin .pledge-checkout-note,
 .pledge-begin .pledge-signup {
   margin-top: 24px;
+}
+
+.path-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.path-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  background: var(--black-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 28px 24px;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.path-card:hover {
+  border-color: var(--red);
+}
+
+.path-card.is-active {
+  border-color: var(--red);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.path-card-title {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 10px;
+  color: var(--white);
+}
+
+.path-card-desc {
+  display: block;
+  margin-top: 10px;
+  color: var(--white-dim);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+
+.path-flow {
+  margin-top: 24px;
+}
+
+.path-flow .pledge-signup {
+  margin-top: 24px;
+}
+
+#moneyBlock {
+  margin-top: 24px;
+}
+
+.money-step-label {
+  color: var(--red);
+  margin-bottom: 14px;
+}
+
+.money-step-label[hidden],
+#moneyNextHint[hidden] {
+  display: none !important;
+}
+
+#signup {
+  margin-top: 24px;
+}
+
+.cadence-toggle {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.cadence-btn {
+  background: none;
+  border: none;
+  color: var(--white-dim);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.cadence-btn + .cadence-btn {
+  border-left: 1px solid var(--line);
+}
+
+.cadence-btn.is-active {
+  color: var(--white);
+  background: rgba(229, 35, 46, 0.14);
+}
+
+.cadence-note {
+  color: var(--gray);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  margin: 16px 0 24px;
+  max-width: 52ch;
 }
 
 /* ---------- homepage how-it-works band ---------- */
@@ -1968,6 +2195,8 @@ input[type="range"]::-moz-range-thumb {
   .pledge-path { gap: 8px; }
   .pledge-path-step { flex: 1 1 calc(50% - 4px); min-width: 0; }
   .pledge-path--home .pledge-path-step { flex: 1 1 100%; }
+  .path-cards { grid-template-columns: 1fr; }
+  .join-grid { grid-template-columns: 1fr; }
 }
 
 .stat-page {

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How It Works — Correctional</title>
-  <meta name="description" content="What Correctional expects of you and what it offers: the pledge, the covenant, your cohort, and the 140-day mission. Read it all — the decision comes at the end." />
+  <meta name="description" content="What Correctional expects of a brother and what it offers: the pledge, the covenant, your cohort, and the 140-day mission. Or give without joining." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -43,7 +43,8 @@
           <p class="section-sub pledge-lede">
             Correctional is a Christ-centered community for men fighting pornography, lust, and sin.
             Your battle funds someone else's freedom. This page explains exactly what Correctional
-            expects of you and what it offers. Read it all — the decision to join comes at the end.
+            expects of a brother and what it offers. Read it all — at the end you can become a brother,
+            or give without joining.
           </p>
         </div>
 
@@ -82,24 +83,18 @@
         <div class="section-head">
           <span class="section-index">01</span>
           <h2>The Pledge</h2>
-          <p class="section-sub">A monthly pledge that funds the fight against trafficking. Minimum $50. Recommended $150. You choose the amount.</p>
+          <p class="section-sub">A brother pledges for the 140 days — $50 a month or $250 once. Recommended $150 a month, or $750 once. 90% to the fight. 10% runs Correctional.</p>
         </div>
-
-        <p class="pledge-phase-note panel">
-          <span class="micro-label">CURRENT QUARTER</span>
-          100% of every pledge goes directly to <strong>International Justice Mission</strong> while Correctional is in launch phase.
-          You do not pick the charity — we do, and we publish where every dollar went.
-          <a href="../organizations.html">See partner organizations →</a>
-        </p>
 
         <div class="pledge-columns">
           <div class="panel pledge-detail">
             <span class="micro-label">WHAT YOU GIVE</span>
-            <p class="pledge-detail-lede">A monthly pledge, kept for the length of your mission.</p>
+            <p class="pledge-detail-lede">Same mission either way. Five monthly charges, or one payment that covers the 140.</p>
             <ul class="pledge-list">
-              <li>Minimum $50 per month. Recommended $150.</li>
-              <li>You set the amount at the bottom of this page — no pressure before you understand the whole picture</li>
-              <li>Your receipt is emailed automatically after every charge</li>
+              <li>Monthly: minimum $50, recommended $150 — five charges, then it stops</li>
+              <li>One payment: minimum $250, recommended $750 — the same five months, paid once</li>
+              <li>90% goes to documented anti-trafficking work. 10% runs Correctional. You can send that 10% to the fight too.</li>
+              <li>You set the amount at the bottom of this page — after you choose to become a brother</li>
               <li>Every dollar is tracked and published — <a href="../index.html#allocation">see the ledger →</a></li>
             </ul>
           </div>
@@ -108,8 +103,8 @@
             <span class="micro-label">WHERE IT GOES</span>
             <p class="pledge-detail-lede">Your money becomes rescue work you can count.</p>
             <p class="pledge-detail-body">
-              At the recommended $150 a month, that is roughly three days of aftercare housing for a survivor,
-              or one border interception, or four investigation hours — every month, for the length of your mission.
+              At the recommended $150 a month, 90% — $135 — is roughly three days of aftercare housing for a survivor,
+              or one border interception, or four investigation hours, every month of the mission.
               These are partner-average unit costs, not promises.
             </p>
             <p class="pledge-detail-body"><a href="../impact.html">How we estimate impact →</a></p>
@@ -148,7 +143,7 @@
               <li>Show up to your cohort call every week, prepared and on time</li>
               <li>Speak honestly about victory and failure; what is said stays in the room</li>
               <li>Answer when a brother calls — day or night, you pick up</li>
-              <li>Keep your pledge — minimum $50, recommended $150 per month</li>
+              <li>Keep your pledge — $50 a month or $250 once; recommended $150 / $750</li>
             </ul>
           </div>
         </div>
@@ -228,7 +223,7 @@
             <li>Report days in the Word and days in prayer since last week</li>
             <li>Confess slips without performance or competition</li>
             <li>Set one concrete aim for the coming week</li>
-            <li>Close with prayer for each man by name</li>
+            <li>Close with prayer</li>
           </ul>
           <p class="pledge-detail-body pledge-debrief">
             <span class="micro-label">DAY 140 — THE DEBRIEF</span>
@@ -244,130 +239,187 @@
       <div class="container">
         <div class="section-head">
           <span class="section-index">BEGIN</span>
-          <h2>The point of decision</h2>
-          <p class="section-sub">You have read what Correctional expects and what it offers. If you are ready, this is where the mission starts.</p>
+          <h2>Choose how to begin</h2>
+          <p class="section-sub">Two different things. A brother enters the 140. A gift sends money and stops there.</p>
         </div>
 
-        <div class="panel pledge-detail pledge-detail--wide" id="next">
-          <span class="micro-label">WHAT HAPPENS NEXT</span>
-          <ol class="pledge-steps">
-            <li>Complete the signup form and covenant checkboxes</li>
-            <li>Make your pledge — receipt goes to your email automatically</li>
-            <li>Within 24 hours, receive your Discord invite</li>
-            <li>Get placed in a cohort of four when one is ready</li>
-            <li>First weekly call within two weeks of cohort formation — day one of your 140</li>
-          </ol>
+        <div class="path-cards" role="group" aria-label="Choose how to begin">
+          <button type="button" class="path-card" id="pathBrother" data-path="brother" aria-pressed="false">
+            <span class="micro-label">THE BROTHERHOOD</span>
+            <span class="path-card-title">Become a brother</span>
+            <span class="path-card-desc">Four men. 140 days. You take the covenant, take a seat in a cohort, and you pledge for the length of it.</span>
+          </button>
+          <button type="button" class="path-card" id="pathGive" data-path="give" aria-pressed="false">
+            <span class="micro-label">THE GIFT</span>
+            <span class="path-card-title">Give without joining</span>
+            <span class="path-card-desc">Send money toward rescue. One-time or monthly. That's it.</span>
+          </button>
         </div>
 
-        <div class="pledge-grid">
-          <div class="panel pledge-panel">
-            <div class="pledge-amount-row">
-              <span class="micro-label">YOUR PLEDGE</span>
-              <div class="pledge-amount" id="pledgeAmount">$150</div>
-              <button class="btn-ghost" id="otherToggle" type="button">Other / specific amount</button>
-            </div>
+        <div class="path-flow" id="brotherFlow" hidden>
+          <div class="panel pledge-detail pledge-detail--wide" id="next">
+            <span class="micro-label">WHAT HAPPENS NEXT</span>
+            <ol class="pledge-steps">
+              <li>Complete signup and purge</li>
+              <li>Pledge</li>
+              <li>Get placed in a cohort within 72 hours</li>
+              <li>Receive Discord invite</li>
+              <li>First weekly call within two weeks of cohort formation — day one of your 140</li>
+            </ol>
+          </div>
 
-            <div class="custom-amount" id="customAmountWrap" hidden>
-              <label class="micro-label" for="customAmount">SPECIFIC AMOUNT (MIN $50)</label>
-              <div class="custom-amount-row">
-                <span class="custom-currency">$</span>
-                <input type="number" id="customAmount" min="50" step="1" placeholder="150" />
-                <button class="btn btn-secondary" id="customApply" type="button">Set</button>
+          <div class="panel pledge-signup" id="signup">
+            <span class="micro-label">01 — SIGN UP</span>
+            <p class="pledge-detail-lede">Tell us about you, then pledge. The form and the payment options are on the next page — checkout leaves the site, so the form comes first.</p>
+            <ul class="pledge-list pledge-list--compact">
+              <li>Name, email, and time zone</li>
+              <li>Why you are joining now — a short testimony</li>
+              <li>Your weekly availability for a 60-minute call</li>
+              <li>The covenant — purge, weekly calls, standing orders, pick up when a brother calls</li>
+            </ul>
+            <a class="btn btn-primary" href="../signup/" id="signupBtn">Open signup form</a>
+            <p class="fine-print">Name, covenant, then pledge — all on the next page. Questions: <a href="mailto:join@joincorrectional.com">join@joincorrectional.com</a></p>
+          </div>
+        </div>
+
+        <div class="path-flow" id="giveFlow" hidden>
+          <div class="panel pledge-detail pledge-detail--wide">
+            <span class="micro-label">GIVE WITHOUT JOINING</span>
+            <p class="pledge-detail-lede">No form. No Discord. No calls. You send money toward rescue — 90% to the front lines, 10% runs Correctional, unless you send that 10% too. Any amount. Anonymous if you want.</p>
+          </div>
+        </div>
+
+        <div id="moneyBlock" hidden>
+          <span class="micro-label money-step-label" id="moneyStepLabel">02 — PLEDGE</span>
+          <div class="cadence-toggle" role="group" aria-label="Payment shape">
+            <button type="button" class="cadence-btn is-active" data-cadence="monthly" aria-pressed="true">Monthly</button>
+            <button type="button" class="cadence-btn" data-cadence="once" aria-pressed="false">One payment</button>
+          </div>
+          <p class="cadence-note" id="cadenceNote">Five charges over 140 days, then it stops. Minimum $50. Recommended $150.</p>
+
+          <div class="pledge-grid">
+            <div class="panel pledge-panel">
+              <div class="pledge-amount-row">
+                <span class="micro-label" id="moneyLabel">YOUR PLEDGE</span>
+                <div class="pledge-amount" id="pledgeAmount">$150</div>
+                <button class="btn-ghost" id="otherToggle" type="button">Other / specific amount</button>
               </div>
-            </div>
 
-            <div class="slider-wrap">
-              <div class="slider-track-area" id="sliderTrackArea">
-                <div class="slider-track" id="sliderTrack">
-                  <div
-                    class="slider-thumb"
-                    id="pledgeThumb"
-                    role="slider"
-                    tabindex="0"
-                    aria-label="Pledge amount"
-                    aria-valuemin="50"
-                    aria-valuemax="10000"
-                    aria-valuenow="150"
-                    aria-valuetext="$150"
-                  ></div>
+              <div class="custom-amount" id="customAmountWrap" hidden>
+                <label class="micro-label" for="customAmount" id="customAmountLabel">SPECIFIC AMOUNT (MIN $50)</label>
+                <div class="custom-amount-row">
+                  <span class="custom-currency">$</span>
+                  <input type="number" id="customAmount" min="50" step="1" placeholder="150" />
+                  <button class="btn btn-secondary" id="customApply" type="button">Set</button>
                 </div>
               </div>
-              <div class="slider-labels" id="sliderLabels" aria-hidden="true"></div>
-            </div>
 
-            <div class="pledge-split-readout pledge-split-readout--single">
-              <div class="readout">
-                <span class="micro-label">TO INTERNATIONAL JUSTICE MISSION</span>
-                <span class="readout-num readout-red" id="split90">$150.00</span>
+              <div class="slider-wrap">
+                <div class="slider-track-area" id="sliderTrackArea">
+                  <div class="slider-track" id="sliderTrack">
+                    <div
+                      class="slider-thumb"
+                      id="pledgeThumb"
+                      role="slider"
+                      tabindex="0"
+                      aria-label="Amount"
+                      aria-valuemin="50"
+                      aria-valuemax="10000"
+                      aria-valuenow="150"
+                      aria-valuetext="$150"
+                    ></div>
+                  </div>
+                </div>
+                <div class="slider-labels" id="sliderLabels" aria-hidden="true"></div>
               </div>
+
+              <div class="split-control" id="splitControl">
+                <div class="split-control-head">
+                  <span class="micro-label">SPLIT CONTROL</span>
+                  <span class="split-lock">YOU SET THE SPLIT</span>
+                </div>
+                <div class="split-control-body">
+                  <input type="range" id="splitSlider" min="90" max="100" step="1" value="90" aria-label="Percent going to the charities" />
+                  <div class="split-readline">
+                    <div class="split-side">
+                      <span>TO THE CHARITIES</span>
+                      <b id="splitPctCharity">90%</b>
+                    </div>
+                    <div class="split-side">
+                      <span>RUNS CORRECTIONAL</span>
+                      <b id="splitPctCorr">10%</b>
+                    </div>
+                  </div>
+                  <p class="fine-print split-control-note">You decide Correctional's share — take it from the default 10% down to 0% and send everything to the fight.</p>
+                </div>
+              </div>
+
+              <div class="pledge-split-readout">
+                <div class="readout">
+                  <span class="micro-label">TO THE FRONT LINES (<span id="labelPctCharity">90%</span>)</span>
+                  <span class="readout-num readout-red" id="split90">$135.00</span>
+                </div>
+                <div class="readout">
+                  <span class="micro-label">RUNS CORRECTIONAL (<span id="labelPctCorr">10%</span>)</span>
+                  <span class="readout-num" id="split10">$15.00</span>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-block" id="pledgeBtn" type="button">
+                <span id="pledgeBtnVerb">Pledge</span> <span id="pledgeBtnAmount">$150</span>
+              </button>
+              <p class="fine-print" id="moneyNextHint">Checkout opens a secure payment page. You leave this site — that's why the form comes first.</p>
+              <p class="fine-print">Payment processing to be integrated (Stripe planned). This is a working prototype.</p>
             </div>
 
-            <button class="btn btn-primary btn-block" id="pledgeBtn" type="button">
-              Pledge <span id="pledgeBtnAmount">$150</span>
-            </button>
-            <p class="fine-print">Checkout connects to our donation page (Every.org — coming online this week).</p>
+            <div class="panel impact-panel">
+              <span class="micro-label">PROJECTED IMPACT OF <span id="impactBase">$135.00</span> DEPLOYED</span>
+              <ul class="impact-list" id="impactList">
+                <li>
+                  <span class="impact-num" data-impact="aftercare">3.0</span>
+                  <span class="impact-desc"><span data-impact-label="aftercare">Days of aftercare housing, food, and casework</span>
+                    <span class="impact-unit">@ $45 / DAY</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="impact-num" data-impact="intercept">0.9</span>
+                  <span class="impact-desc"><span data-impact-label="intercept">Border or transit interceptions</span>
+                    <span class="impact-unit">@ $150 / OPERATION</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="impact-num" data-impact="hours">3.9</span>
+                  <span class="impact-desc"><span data-impact-label="hours">Investigation hours</span>
+                    <span class="impact-unit">@ $35 / HOUR</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="impact-num" data-impact="counsel">1.7</span>
+                  <span class="impact-desc"><span data-impact-label="counsel">Trauma-informed counseling sessions</span>
+                    <span class="impact-unit">@ $80 / SESSION</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="impact-num" data-impact="legal">2.3</span>
+                  <span class="impact-desc"><span data-impact-label="legal">Hours of survivor legal casework</span>
+                    <span class="impact-unit">@ $60 / HOUR</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="impact-num" data-impact="rescue">3.4%</span>
+                  <span class="impact-desc"><span data-impact-label="rescue">Share of one documented rescue</span>
+                    <span class="impact-unit">@ $4,000 / PERSON</span>
+                  </span>
+                </li>
+              </ul>
+              <p class="fine-print">Illustrative model, not a promise. <a href="../impact.html">How we estimate this →</a></p>
+            </div>
           </div>
 
-          <div class="panel impact-panel">
-            <span class="micro-label">PROJECTED IMPACT OF <span id="impactBase">$150.00</span> DEPLOYED</span>
-            <ul class="impact-list" id="impactList">
-              <li>
-                <span class="impact-num" data-impact="aftercare">2.0</span>
-                <span class="impact-desc"><span data-impact-label="aftercare">Days of aftercare housing, food, and casework</span>
-                  <span class="impact-unit">@ $45 / DAY</span>
-                </span>
-              </li>
-              <li>
-                <span class="impact-num" data-impact="intercept">0.6</span>
-                <span class="impact-desc"><span data-impact-label="intercept">Border or transit interceptions</span>
-                  <span class="impact-unit">@ $150 / OPERATION</span>
-                </span>
-              </li>
-              <li>
-                <span class="impact-num" data-impact="hours">2.6</span>
-                <span class="impact-desc"><span data-impact-label="hours">Investigation hours</span>
-                  <span class="impact-unit">@ $35 / HOUR</span>
-                </span>
-              </li>
-              <li>
-                <span class="impact-num" data-impact="counsel">1.1</span>
-                <span class="impact-desc"><span data-impact-label="counsel">Trauma-informed counseling sessions</span>
-                  <span class="impact-unit">@ $80 / SESSION</span>
-                </span>
-              </li>
-              <li>
-                <span class="impact-num" data-impact="legal">1.5</span>
-                <span class="impact-desc"><span data-impact-label="legal">Hours of survivor legal casework</span>
-                  <span class="impact-unit">@ $60 / HOUR</span>
-                </span>
-              </li>
-              <li>
-                <span class="impact-num" data-impact="rescue">2.3%</span>
-                <span class="impact-desc"><span data-impact-label="rescue">Share of one documented rescue</span>
-                  <span class="impact-unit">@ $4,000 / PERSON</span>
-                </span>
-              </li>
-            </ul>
-            <p class="fine-print">Illustrative model, not a promise. <a href="../impact.html">How we estimate this →</a></p>
+          <div class="panel pledge-checkout-note" id="checkout">
+            <span class="micro-label">CHECKOUT</span>
+            <p id="checkoutCopy">The button above will open a secure payment page.</p>
           </div>
-        </div>
-
-        <div class="panel pledge-checkout-note" id="checkout">
-          <span class="micro-label">CHECKOUT</span>
-          <p>The pledge button above will open a secure donation page for International Justice Mission. Until that link is live, complete the signup below and we will send you the checkout link directly.</p>
-        </div>
-
-        <div class="panel pledge-signup" id="signup">
-          <span class="micro-label">SIGN UP</span>
-          <p class="pledge-detail-lede">Tell us about you. Takes about five minutes — complete it before your first cohort call.</p>
-          <ul class="pledge-list pledge-list--compact">
-            <li>Name, email, and time zone</li>
-            <li>Why you are joining now — a short testimony</li>
-            <li>Your weekly availability for a 60-minute call</li>
-            <li>Covenant checkboxes — purge completed, commitment understood</li>
-          </ul>
-          <a class="btn btn-primary" href="#" id="signupBtn">Open signup form</a>
-          <p class="fine-print">Form link goes live this week. Questions: <a href="mailto:join@joincorrectional.com">join@joincorrectional.com</a></p>
         </div>
       </div>
     </section>

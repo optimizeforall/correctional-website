@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign up — Correctional</title>
+  <meta name="description" content="Become a brother: complete the covenant, then pledge for the 140-day mission. Monthly or one payment." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="../assets/logo-cross-plus.png" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body class="subpage pledge-page signup-page" data-page="signup">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="header-mark" aria-label="Correctional home">
+        <span class="wordmark wordmark--small">CORREC<svg class="cross" viewBox="0 0 60 100" aria-hidden="true"><rect x="22" y="0" width="16" height="100"/><rect x="0" y="22" width="60" height="16"/></svg>IONAL</span>
+      </a>
+      <button class="nav-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="header-nav" id="site-nav">
+        <a href="../pledge/">Pledge</a>
+        <a href="../index.html#allocation">Transparency</a>
+        <a href="../index.html#donors">Pledges</a>
+        <a href="../index.html#evidence">Who it helps</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../organizations.html">Organizations</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="subpage-main">
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-index">BECOME A BROTHER</span>
+          <h2>Sign up, then pledge</h2>
+          <p class="section-sub">Complete the form first. Checkout opens a secure payment page and takes you off this site — we need who you are before you pay. <a href="../pledge/">How it works →</a></p>
+        </div>
+
+        <form class="panel join-form" id="joinForm" action="#" method="post">
+          <span class="micro-label">01 — ABOUT YOU</span>
+          <p class="pledge-detail-lede">Takes about five minutes. Then set your pledge below.</p>
+
+          <div class="join-grid">
+            <div class="join-field">
+              <label class="micro-label" for="joinName">Full name</label>
+              <input type="text" id="joinName" name="name" autocomplete="name" required />
+            </div>
+            <div class="join-field">
+              <label class="micro-label" for="joinEmail">Email</label>
+              <input type="email" id="joinEmail" name="email" autocomplete="email" required />
+            </div>
+            <div class="join-field">
+              <label class="micro-label" for="joinTz">Time zone</label>
+              <select id="joinTz" name="timezone" required>
+                <option value="">Select your time zone</option>
+                <option value="America/New_York">Eastern (US)</option>
+                <option value="America/Chicago">Central (US)</option>
+                <option value="America/Denver">Mountain (US)</option>
+                <option value="America/Los_Angeles">Pacific (US)</option>
+                <option value="America/Phoenix">Arizona</option>
+                <option value="America/Anchorage">Alaska</option>
+                <option value="Pacific/Honolulu">Hawaii</option>
+                <option value="America/Toronto">Eastern (Canada)</option>
+                <option value="America/Vancouver">Pacific (Canada)</option>
+                <option value="Europe/London">UK</option>
+                <option value="Europe/Berlin">Central Europe</option>
+                <option value="Australia/Sydney">Australia Eastern</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="join-field join-field--wide">
+              <label class="micro-label" for="joinWhy">Why you are joining now</label>
+              <textarea id="joinWhy" name="testimony" rows="5" required placeholder="A short testimony — what brought you here."></textarea>
+            </div>
+            <div class="join-field join-field--wide">
+              <span class="micro-label">Weekly availability for a 60-minute call</span>
+              <div class="join-days" role="group" aria-label="Days you can take a call">
+                <label class="join-check"><input type="checkbox" name="avail" value="sun" /> Sun</label>
+                <label class="join-check"><input type="checkbox" name="avail" value="mon" /> Mon</label>
+                <label class="join-check"><input type="checkbox" name="avail" value="tue" /> Tue</label>
+                <label class="join-check"><input type="checkbox" name="avail" value="wed" /> Wed</label>
+                <label class="join-check"><input type="checkbox" name="avail" value="thu" /> Thu</label>
+                <label class="join-check"><input type="checkbox" name="avail" value="fri" /> Fri</label>
+                <label class="join-check"><input type="checkbox" name="avail" value="sat" /> Sat</label>
+              </div>
+              <label class="micro-label join-window-label" for="joinWindow">Preferred window</label>
+              <select id="joinWindow" name="window">
+                <option value="">Any</option>
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="evening">Evening</option>
+              </select>
+            </div>
+            <div class="join-field join-field--wide">
+              <span class="micro-label">The covenant</span>
+              <p class="join-covenant-lede">These are the orders. Check each one. If you cannot keep it, do not pledge. <a href="../pledge/#covenant">Read the full standard →</a></p>
+              <div class="join-covenant" role="group" aria-label="The covenant">
+                <label class="join-check join-check--block">
+                  <input type="checkbox" id="joinPurge" name="purge" value="yes" required />
+                  I have completed the purge — devices, subscriptions, accounts, and photos that pull me back
+                </label>
+                <label class="join-check join-check--block">
+                  <input type="checkbox" name="show_up" value="yes" required />
+                  I will show up to every weekly call for 140 days — prepared and on time
+                </label>
+                <label class="join-check join-check--block">
+                  <input type="checkbox" name="prayer_word" value="yes" required />
+                  I will track days in prayer and days in the Word — not days since a slip
+                </label>
+                <label class="join-check join-check--block">
+                  <input type="checkbox" name="standing_orders" value="yes" required />
+                  When an urge hits, I call a brother before I act. If I fall, I call the same way. No hiding.
+                </label>
+                <label class="join-check join-check--block">
+                  <input type="checkbox" name="confession" value="yes" required />
+                  Confession happens out loud on the weekly call — not in a text, not in my head
+                </label>
+                <label class="join-check join-check--block">
+                  <input type="checkbox" name="pickup" value="yes" required />
+                  I will answer when a brother calls — day or night, I pick up
+                </label>
+                <label class="join-check join-check--block">
+                  <input type="checkbox" name="confidential" value="yes" required />
+                  What is said in the cohort stays in the room
+                </label>
+              </div>
+              <p class="fine-print" id="purgeGateNote">You cannot pledge until the purge is done.</p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="pay">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-index">02 — PLEDGE</span>
+          <h2>How you pay</h2>
+          <p class="section-sub">Same 140-day mission either way. 90% to the fight. 10% runs Correctional. You can send that 10% to the fight too.</p>
+        </div>
+
+        <div class="pledge-columns">
+          <div class="panel pledge-detail">
+            <span class="micro-label">MONTHLY</span>
+            <p class="pledge-detail-lede">Five charges over 140 days, then it stops.</p>
+            <ul class="pledge-list">
+              <li>Minimum $50 per month</li>
+              <li>Recommended $150 per month</li>
+              <li>Receipt emailed after every charge</li>
+            </ul>
+          </div>
+          <div class="panel pledge-detail">
+            <span class="micro-label">ONE PAYMENT</span>
+            <p class="pledge-detail-lede">One charge that covers the whole 140.</p>
+            <ul class="pledge-list">
+              <li>Minimum $250 once</li>
+              <li>Recommended $750 once</li>
+              <li>Same mission as five months of the monthly rate</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="moneyBlock">
+          <div class="cadence-toggle" role="group" aria-label="Payment shape">
+            <button type="button" class="cadence-btn is-active" data-cadence="monthly" aria-pressed="true">Monthly</button>
+            <button type="button" class="cadence-btn" data-cadence="once" aria-pressed="false">One payment</button>
+          </div>
+          <p class="cadence-note" id="cadenceNote">Five charges over 140 days, then it stops. Minimum $50. Recommended $150.</p>
+
+          <div class="pledge-grid">
+            <div class="panel pledge-panel">
+              <div class="pledge-amount-row">
+                <span class="micro-label" id="moneyLabel">YOUR PLEDGE</span>
+                <div class="pledge-amount" id="pledgeAmount">$150</div>
+                <button class="btn-ghost" id="otherToggle" type="button">Other / specific amount</button>
+              </div>
+
+              <div class="custom-amount" id="customAmountWrap" hidden>
+                <label class="micro-label" for="customAmount" id="customAmountLabel">SPECIFIC AMOUNT (MIN $50)</label>
+                <div class="custom-amount-row">
+                  <span class="custom-currency">$</span>
+                  <input type="number" id="customAmount" min="50" step="1" placeholder="150" />
+                  <button class="btn btn-secondary" id="customApply" type="button">Set</button>
+                </div>
+              </div>
+
+              <div class="slider-wrap">
+                <div class="slider-track-area" id="sliderTrackArea">
+                  <div class="slider-track" id="sliderTrack">
+                    <div
+                      class="slider-thumb"
+                      id="pledgeThumb"
+                      role="slider"
+                      tabindex="0"
+                      aria-label="Pledge amount"
+                      aria-valuemin="50"
+                      aria-valuemax="10000"
+                      aria-valuenow="150"
+                      aria-valuetext="$150"
+                    ></div>
+                  </div>
+                </div>
+                <div class="slider-labels" id="sliderLabels" aria-hidden="true"></div>
+              </div>
+
+              <div class="split-control" id="splitControl">
+                <div class="split-control-head">
+                  <span class="micro-label">SPLIT CONTROL</span>
+                  <span class="split-lock">YOU SET THE SPLIT</span>
+                </div>
+                <div class="split-control-body">
+                  <input type="range" id="splitSlider" min="90" max="100" step="1" value="90" aria-label="Percent going to the charities" />
+                  <div class="split-readline">
+                    <div class="split-side">
+                      <span>TO THE CHARITIES</span>
+                      <b id="splitPctCharity">90%</b>
+                    </div>
+                    <div class="split-side">
+                      <span>RUNS CORRECTIONAL</span>
+                      <b id="splitPctCorr">10%</b>
+                    </div>
+                  </div>
+                  <p class="fine-print split-control-note">You decide Correctional's share — take it from the default 10% down to 0% and send everything to the fight.</p>
+                </div>
+              </div>
+
+              <div class="pledge-split-readout">
+                <div class="readout">
+                  <span class="micro-label">TO THE FRONT LINES (<span id="labelPctCharity">90%</span>)</span>
+                  <span class="readout-num readout-red" id="split90">$135.00</span>
+                </div>
+                <div class="readout">
+                  <span class="micro-label">RUNS CORRECTIONAL (<span id="labelPctCorr">10%</span>)</span>
+                  <span class="readout-num" id="split10">$15.00</span>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-block" id="pledgeBtn" type="button" disabled>
+                <span id="pledgeBtnVerb">Pledge</span> <span id="pledgeBtnAmount">$150</span>
+              </button>
+              <p class="fine-print" id="pledgeGateHint">Complete the purge before you can pledge.</p>
+              <p class="fine-print">Payment processing to be integrated (Stripe planned). This is a working prototype.</p>
+            </div>
+
+            <div class="panel impact-panel">
+              <span class="micro-label">PROJECTED IMPACT OF <span id="impactBase">$135.00</span> DEPLOYED</span>
+              <ul class="impact-list" id="impactList">
+                <li>
+                  <span class="impact-num" data-impact="aftercare">3.0</span>
+                  <span class="impact-desc"><span data-impact-label="aftercare">Days of aftercare housing, food, and casework</span>
+                    <span class="impact-unit">@ $45 / DAY</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="impact-num" data-impact="intercept">0.9</span>
+                  <span class="impact-desc"><span data-impact-label="intercept">Border or transit interceptions</span>
+                    <span class="impact-unit">@ $150 / OPERATION</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="impact-num" data-impact="hours">3.9</span>
+                  <span class="impact-desc"><span data-impact-label="hours">Investigation hours</span>
+                    <span class="impact-unit">@ $35 / HOUR</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="impact-num" data-impact="counsel">1.7</span>
+                  <span class="impact-desc"><span data-impact-label="counsel">Trauma-informed counseling sessions</span>
+                    <span class="impact-unit">@ $80 / SESSION</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="impact-num" data-impact="legal">2.3</span>
+                  <span class="impact-desc"><span data-impact-label="legal">Hours of survivor legal casework</span>
+                    <span class="impact-unit">@ $60 / HOUR</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="impact-num" data-impact="rescue">3.4%</span>
+                  <span class="impact-desc"><span data-impact-label="rescue">Share of one documented rescue</span>
+                    <span class="impact-unit">@ $4,000 / PERSON</span>
+                  </span>
+                </li>
+              </ul>
+              <p class="fine-print">Illustrative model, not a promise. <a href="../impact.html">How we estimate this →</a></p>
+            </div>
+          </div>
+
+          <div class="panel pledge-checkout-note" id="checkout">
+            <span class="micro-label">CHECKOUT</span>
+            <p id="checkoutCopy">The button above will open a secure payment page.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="wordmark wordmark--small">CORREC<svg class="cross" viewBox="0 0 60 100" aria-hidden="true"><rect x="22" y="0" width="16" height="100"/><rect x="0" y="22" width="60" height="16"/></svg>IONAL</span>
+      <p class="footer-line">A Christ-centered program for men. 90% of every pledge fights human trafficking. 10% keeps the lights on.</p>
+      <p class="footer-verse">"You were bought at a price." &mdash; 1 Corinthians 6:20</p>
+    </div>
+  </footer>
+
+  <script src="../nav.js"></script>
+  <script src="../app.js"></script>
+</body>
+</html>

@@ -8,59 +8,72 @@
 
 /* ---------- pledge checkpoints ---------- */
 
-const MIN_PLEDGE = 50;
-const DEFAULT_PLEDGE = 150;
 const MAX_PLEDGE = 10000;
 const DEFAULT_CHARITY_PCT = 90;
+const SPLIT_AMOUNT = 1000;
+const SPLIT_T = 0.65;
+const LOG_HIGH = Math.log(MAX_PLEDGE / SPLIT_AMOUNT);
 
-/* Magnetic snap points (same set as the gauntlet slider). Between these,
-   the track is continuous: $5 steps below $1,000, $25 above. */
-const SNAP_POINTS = [
+const HOME_SNAPS = [
   150, 200, 250, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 3000,
   4000, 5000, 6000, 7000, 8000, 9000, 10000
 ];
+const HOME_TICKS = [50, 250, 500, 1000, 2000, 5000, 10000];
+const ONCE_SNAPS = [
+  250, 300, 400, 500, 600, 700, 750, 800, 900, 1000, 1500, 2000, 3000,
+  4000, 5000, 6000, 7000, 8000, 9000, 10000
+];
+const ONCE_TICKS = [250, 500, 750, 1000, 2000, 5000, 10000];
+const GIVE_SNAPS = [
+  5, 10, 25, 50, 75, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 900,
+  1000, 1500, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000
+];
+const GIVE_TICKS = [1, 50, 250, 1000, 2000, 5000, 10000];
 
-const MAJOR_TICKS = [50, 250, 500, 1000, 2000, 5000, 10000];
+let minAmount = 50;
+let recommendedAmount = 150;
+let snapPoints = HOME_SNAPS.slice();
+let majorTicks = HOME_TICKS.slice();
+let logLow = Math.log(SPLIT_AMOUNT / minAmount);
+let snapZones = [];
 
-let currentAmount = DEFAULT_PLEDGE;
+let currentAmount = 150;
 let charityPct = DEFAULT_CHARITY_PCT; // 90–100; the remainder runs Correctional
-
-/* Piecewise-log scale: $50–$1,000 occupies the first 65% of the track. */
-const SPLIT_AMOUNT = 1000;
-const SPLIT_T = 0.65;
-const LOG_LOW = Math.log(SPLIT_AMOUNT / MIN_PLEDGE);
-const LOG_HIGH = Math.log(MAX_PLEDGE / SPLIT_AMOUNT);
+let givingPath = null; // "brother" | "give" — pledge page only
+let cadence = "monthly"; // "monthly" | "once"
 
 function clamp(n, lo, hi) {
   return Math.min(hi, Math.max(lo, n));
 }
 
+function rebuildScale() {
+  logLow = Math.log(SPLIT_AMOUNT / minAmount);
+  snapZones = snapPoints.map((snap, i) => {
+    const pos = amountToPosition(snap);
+    let radius = 0.012;
+    if (i > 0) radius = Math.min(radius, (pos - amountToPosition(snapPoints[i - 1])) * 0.45);
+    if (i < snapPoints.length - 1) {
+      radius = Math.min(radius, (amountToPosition(snapPoints[i + 1]) - pos) * 0.45);
+    }
+    return { snap, pos, radius };
+  });
+}
+
 function rawPositionToAmount(t) {
-  if (t <= SPLIT_T) return MIN_PLEDGE * Math.exp((t / SPLIT_T) * LOG_LOW);
+  if (t <= SPLIT_T) return minAmount * Math.exp((t / SPLIT_T) * logLow);
   return SPLIT_AMOUNT * Math.exp(((t - SPLIT_T) / (1 - SPLIT_T)) * LOG_HIGH);
 }
 
 function amountToPosition(amount) {
-  const a = clamp(amount, MIN_PLEDGE, MAX_PLEDGE);
-  if (a <= SPLIT_AMOUNT) return (SPLIT_T * Math.log(a / MIN_PLEDGE)) / LOG_LOW;
+  const a = clamp(amount, minAmount, MAX_PLEDGE);
+  if (a <= SPLIT_AMOUNT) return (SPLIT_T * Math.log(a / minAmount)) / logLow;
   return SPLIT_T + ((1 - SPLIT_T) * Math.log(a / SPLIT_AMOUNT)) / LOG_HIGH;
 }
-
-const SNAP_RADIUS = 0.012;
-const SNAP_ZONES = SNAP_POINTS.map((snap, i) => {
-  const pos = amountToPosition(snap);
-  let radius = SNAP_RADIUS;
-  if (i > 0) radius = Math.min(radius, (pos - amountToPosition(SNAP_POINTS[i - 1])) * 0.45);
-  if (i < SNAP_POINTS.length - 1) {
-    radius = Math.min(radius, (amountToPosition(SNAP_POINTS[i + 1]) - pos) * 0.45);
-  }
-  return { snap, pos, radius };
-});
 
 function positionToAmount(t) {
   const tc = clamp(t, 0, 1);
   let nearest = null;
-  for (const zone of SNAP_ZONES) {
+  for (const zone of snapZones) {
     const dist = Math.abs(tc - zone.pos);
     if (dist <= zone.radius && (nearest === null || dist < nearest.dist)) {
       nearest = { snap: zone.snap, dist };
@@ -68,25 +81,31 @@ function positionToAmount(t) {
   }
   if (nearest) return nearest.snap;
   const raw = rawPositionToAmount(tc);
-  const step = raw < SPLIT_AMOUNT ? 5 : 25;
-  return clamp(Math.round(raw / step) * step, MIN_PLEDGE, MAX_PLEDGE);
+  const step = raw < SPLIT_AMOUNT ? (minAmount < 10 && raw < 50 ? 1 : 5) : 25;
+  return clamp(Math.round(raw / step) * step, minAmount, MAX_PLEDGE);
 }
 
 function stepAmount(amount, direction) {
   if (direction > 0) {
-    if (amount >= MAX_PLEDGE) return Math.max(amount, MAX_PLEDGE);
-    if (amount < 150) return Math.min(150, Math.floor(amount / 10) * 10 + 10);
-    for (const snap of SNAP_POINTS) {
+    if (amount >= MAX_PLEDGE) return MAX_PLEDGE;
+    if (amount < recommendedAmount) {
+      const step = minAmount < 10 && amount < 10 ? 1 : 10;
+      return Math.min(recommendedAmount, Math.floor(amount / step) * step + step);
+    }
+    for (const snap of snapPoints) {
       if (snap > amount) return snap;
     }
     return MAX_PLEDGE;
   }
   if (amount > MAX_PLEDGE) return MAX_PLEDGE;
-  if (amount <= 150) return Math.max(MIN_PLEDGE, Math.ceil(amount / 10) * 10 - 10);
-  for (let i = SNAP_POINTS.length - 1; i >= 0; i--) {
-    if (SNAP_POINTS[i] < amount) return SNAP_POINTS[i];
+  if (amount <= recommendedAmount) {
+    const step = minAmount < 10 && amount <= 10 ? 1 : 10;
+    return Math.max(minAmount, Math.ceil(amount / step) * step - step);
   }
-  return MIN_PLEDGE;
+  for (let i = snapPoints.length - 1; i >= 0; i--) {
+    if (snapPoints[i] < amount) return snapPoints[i];
+  }
+  return minAmount;
 }
 
 /* ---------- recent pledges (prototype feed) ---------- */
@@ -142,7 +161,9 @@ const split10El = $("split10");
 const impactBaseEl = $("impactBase");
 const splitSlider = $("splitSlider");
 const isPledgePage = document.body.dataset.page === "pledge";
-if (isPledgePage) charityPct = 100;
+const isSignupPage = document.body.dataset.page === "signup";
+const isCheckoutPage = isPledgePage || isSignupPage;
+if (isSignupPage) givingPath = "brother";
 
 function setText(id, text) {
   const el = $(id);
@@ -262,28 +283,30 @@ function tickLabel(v) {
   return v >= 1000 ? "$" + v / 1000 + "K" : "$" + v;
 }
 
-function buildTicks() {
+function rebuildTicks() {
   const track = $("sliderTrack");
   const labelsEl = $("sliderLabels");
   const thumb = $("pledgeThumb");
   if (!track || !labelsEl || !thumb) return;
 
-  const majorSet = new Set(MAJOR_TICKS);
-  const ticks = SNAP_POINTS.map((v) => {
+  track.querySelectorAll(".slider-tick, .slider-mark").forEach((el) => el.remove());
+
+  const majorSet = new Set(majorTicks);
+  const ticks = snapPoints.map((v) => {
     const pct = (amountToPosition(v) * 100).toFixed(4);
     const kind = majorSet.has(v) ? "major" : "minor";
     return `<span class="slider-tick slider-tick--${kind}" style="left:${pct}%"></span>`;
   }).join("");
 
   const minTick = `<span class="slider-tick slider-tick--major" style="left:0%"></span>`;
-  const recPct = (amountToPosition(DEFAULT_PLEDGE) * 100).toFixed(4);
-  const recMark = `<span class="slider-mark" style="left:${recPct}%" title="Recommended $150"></span>`;
+  const recPct = (amountToPosition(recommendedAmount) * 100).toFixed(4);
+  const recMark = `<span class="slider-mark" style="left:${recPct}%" title="Recommended ${fmtMoney(recommendedAmount)}"></span>`;
 
   track.insertAdjacentHTML("afterbegin", minTick + ticks + recMark);
 
-  labelsEl.innerHTML = MAJOR_TICKS.map((v, idx) => {
+  labelsEl.innerHTML = majorTicks.map((v, idx) => {
     const pct = (amountToPosition(v) * 100).toFixed(4);
-    const shift = idx === 0 ? "0" : idx === MAJOR_TICKS.length - 1 ? "-100%" : "-50%";
+    const shift = idx === 0 ? "0" : idx === majorTicks.length - 1 ? "-100%" : "-50%";
     return `<span class="slider-label" style="left:${pct}%;transform:translateX(${shift})">${tickLabel(v)}</span>`;
   }).join("");
 }
@@ -352,7 +375,7 @@ function initPledgeSlider() {
         next = stepAmount(currentAmount, -1);
         break;
       case "Home":
-        next = MIN_PLEDGE;
+        next = minAmount;
         break;
       case "End":
         next = MAX_PLEDGE;
@@ -394,9 +417,9 @@ function initPledgeControls() {
 
   function applyCustom() {
     const v = Math.floor(Number(customInput.value));
-    if (!v || v < MIN_PLEDGE) {
-      customInput.value = MIN_PLEDGE;
-      currentAmount = MIN_PLEDGE;
+    if (!v || v < minAmount) {
+      customInput.value = minAmount;
+      currentAmount = minAmount;
     } else {
       currentAmount = v;
     }
@@ -414,13 +437,12 @@ function initPledgeControls() {
   if (!pledgeBtn) return;
 
   pledgeBtn.addEventListener("click", () => {
-    if (isPledgePage) {
+    if (isSignupPage && !isPurgeComplete()) return;
+    if (isCheckoutPage) {
       const checkoutUrl = document.body.dataset.checkoutUrl;
       if (checkoutUrl) {
         const url = checkoutUrl.replace("{amount}", String(currentAmount));
         window.open(url, "_blank", "noopener,noreferrer");
-        scrollToEl($("next"));
-        return;
       }
       scrollToEl($("checkout"));
       return;
@@ -434,6 +456,174 @@ function initPledgeControls() {
       pledgeBtn.disabled = false;
     }, 4000);
     scrollToEl($("donors"));
+  });
+}
+
+function isBrotherMoney() {
+  return isSignupPage || (isPledgePage && givingPath === "brother");
+}
+
+function currentPreset() {
+  if (isBrotherMoney() && cadence === "once") {
+    return {
+      min: 250,
+      recommended: 750,
+      snaps: ONCE_SNAPS,
+      ticks: ONCE_TICKS,
+      verb: "Pledge",
+      label: "YOUR PLEDGE"
+    };
+  }
+  if (isPledgePage && givingPath === "give") {
+    return {
+      min: 1,
+      recommended: 150,
+      snaps: GIVE_SNAPS,
+      ticks: GIVE_TICKS,
+      verb: "Give",
+      label: "YOUR GIFT"
+    };
+  }
+  return {
+    min: 50,
+    recommended: 150,
+    snaps: HOME_SNAPS,
+    ticks: HOME_TICKS,
+    verb: "Pledge",
+    label: "YOUR PLEDGE"
+  };
+}
+
+function cadenceCopy() {
+  if (givingPath === "give") {
+    return cadence === "once"
+      ? "A single gift. Any amount."
+      : "Repeats until you cancel. Any amount.";
+  }
+  if (cadence === "once") {
+    return "Covers the whole 140 days. Minimum $250. Recommended $750.";
+  }
+  return "Five charges over 140 days, then it stops. Minimum $50. Recommended $150.";
+}
+
+function checkoutCopy() {
+  if (givingPath === "give") {
+    return "The button above will open a secure payment page. Until that link is live, email join@joincorrectional.com and we will send you the checkout link. No signup required.";
+  }
+  return "The button above will open a secure payment page. Until that link is live, this is a working prototype.";
+}
+
+function applyMoneyMode() {
+  const preset = currentPreset();
+  minAmount = preset.min;
+  recommendedAmount = preset.recommended;
+  snapPoints = preset.snaps.slice();
+  majorTicks = preset.ticks.slice();
+  rebuildScale();
+  rebuildTicks();
+  if (currentAmount < minAmount) currentAmount = preset.recommended;
+
+  setText("moneyLabel", preset.label);
+  setText("pledgeBtnVerb", preset.verb);
+
+  const customLabel = $("customAmountLabel");
+  if (customLabel) {
+    customLabel.textContent = preset.min <= 1
+      ? "SPECIFIC AMOUNT (ANY AMOUNT)"
+      : "SPECIFIC AMOUNT (MIN " + fmtMoney(preset.min) + ")";
+  }
+  const customInput = $("customAmount");
+  if (customInput) {
+    customInput.min = String(preset.min);
+    customInput.placeholder = String(preset.recommended);
+  }
+  const thumb = $("pledgeThumb");
+  if (thumb) {
+    thumb.setAttribute("aria-valuemin", String(minAmount));
+    thumb.setAttribute("aria-label", preset.verb === "Give" ? "Gift amount" : "Pledge amount");
+  }
+  const note = $("cadenceNote");
+  if (note) note.textContent = cadenceCopy();
+  const checkout = $("checkoutCopy");
+  if (checkout) checkout.textContent = checkoutCopy();
+
+  const onceBtn = document.querySelector("[data-cadence='once']");
+  if (onceBtn) onceBtn.textContent = givingPath === "give" ? "One-time" : "One payment";
+
+  const stepLabel = $("moneyStepLabel");
+  if (stepLabel) stepLabel.hidden = !isBrotherMoney() || isSignupPage;
+  const nextHint = $("moneyNextHint");
+  if (nextHint) nextHint.hidden = !isBrotherMoney();
+
+  renderAmount();
+}
+
+function selectPath(name) {
+  givingPath = name;
+  document.querySelectorAll(".path-card").forEach((card) => {
+    const on = card.dataset.path === name;
+    card.classList.toggle("is-active", on);
+    card.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  const brother = $("brotherFlow");
+  const give = $("giveFlow");
+  const money = $("moneyBlock");
+  if (brother) brother.hidden = name !== "brother";
+  if (give) give.hidden = name !== "give";
+  if (money) money.hidden = name !== "give";
+  applyMoneyMode();
+  scrollToEl(name === "brother" ? brother : give);
+}
+
+function selectCadence(next) {
+  cadence = next;
+  document.querySelectorAll(".cadence-btn").forEach((btn) => {
+    const on = btn.dataset.cadence === next;
+    btn.classList.toggle("is-active", on);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  applyMoneyMode();
+}
+
+function isPurgeComplete() {
+  const purge = $("joinPurge");
+  return Boolean(purge && purge.checked);
+}
+
+function initPurgeGate() {
+  const purge = $("joinPurge");
+  const pledgeBtn = $("pledgeBtn");
+  const note = $("purgeGateNote");
+  const hint = $("pledgeGateHint");
+  if (!purge || !pledgeBtn) return;
+
+  function sync() {
+    const ok = purge.checked;
+    pledgeBtn.disabled = !ok;
+    if (note) note.hidden = ok;
+    if (hint) hint.hidden = ok;
+  }
+
+  purge.addEventListener("change", sync);
+  sync();
+}
+
+function initPathChoice() {
+  document.querySelectorAll(".cadence-btn").forEach((btn) => {
+    btn.addEventListener("click", () => selectCadence(btn.dataset.cadence));
+  });
+  if (isSignupPage) {
+    applyMoneyMode();
+    const joinForm = $("joinForm");
+    if (joinForm) {
+      joinForm.addEventListener("submit", (e) => e.preventDefault());
+    }
+    initPurgeGate();
+    return;
+  }
+  if (!isPledgePage) return;
+  document.querySelectorAll(".path-card").forEach((card) => {
+    card.addEventListener("click", () => selectPath(card.dataset.path));
   });
 }
 
@@ -895,9 +1085,11 @@ if (pledgerRows) {
    ============================================================ */
 
 if (amountEl) {
-  buildTicks();
+  rebuildScale();
+  rebuildTicks();
   initPledgeSlider();
   initPledgeControls();
+  initPathChoice();
   renderAmount();
 }
 
