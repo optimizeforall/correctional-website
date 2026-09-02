@@ -23,9 +23,6 @@
       </button>
       <nav class="header-nav" id="site-nav">
         <a href="pledge/">Pledge</a>
-        <a href="#allocation">Transparency</a>
-        <a href="#donors">Pledges</a>
-        <a href="#evidence">Who it helps</a>
         <a href="blog.html">Blog</a>
         <a href="organizations.html">Organizations</a>
       </nav>
@@ -89,17 +86,16 @@
     </div>
   </section>
 
-  <!-- ============ PLEDGE ============ -->
-  <section class="section" id="pledge">
+  <!-- ============ JOIN / GIVE ============ -->
+  <section class="section" id="join">
     <div class="container">
       <div class="section-head">
         <span class="section-index">01</span>
-        <h2>The Pledge</h2>
-        <p class="section-sub">Minimum $50. Recommended $150.</p>
+        <h2>Join / Give</h2>
+        <p class="section-sub">Set the amount. Join the 140, or give the same dollars without the covenant.</p>
       </div>
 
       <div class="pledge-grid">
-        <!-- Left: amount selection -->
         <div class="panel pledge-panel">
           <div class="pledge-amount-row">
             <span class="micro-label">YOUR PLEDGE</span>
@@ -108,7 +104,7 @@
           </div>
 
           <div class="custom-amount" id="customAmountWrap" hidden>
-            <label class="micro-label" for="customAmount">SPECIFIC AMOUNT (MIN $50)</label>
+            <label class="micro-label" for="customAmount" id="customAmountLabel">SPECIFIC AMOUNT (MIN $50)</label>
             <div class="custom-amount-row">
               <span class="custom-currency">$</span>
               <input type="number" id="customAmount" min="50" step="1" placeholder="150" />
@@ -167,9 +163,11 @@
             </div>
           </div>
 
-          <button class="btn btn-primary btn-block" id="pledgeBtn" type="button">
-            Pledge <span id="pledgeBtnAmount">$150</span>
-          </button>
+          <div class="home-paths" role="group" aria-label="Choose how to begin">
+            <a class="btn" id="homePledgeCta" href="signup/?amount=150">Make the pledge</a>
+            <a class="btn btn-secondary" id="homeGiveCta" href="mailto:join@joincorrectional.com?subject=Gift%20of%20%24150">Donate <span id="giveBtnAmount">$150</span></a>
+          </div>
+          <p class="fine-print home-path-note">Same dollars either way. A pledge also enters the 140. A gift is money only.</p>
           <p class="fine-print">Payment processing to be integrated (Stripe planned). This is a working prototype.</p>
         </div>
 
@@ -177,37 +175,37 @@
           <span class="micro-label">PROJECTED IMPACT OF <span id="impactBase">$135.00</span> DEPLOYED</span>
           <ul class="impact-list" id="impactList">
             <li>
-              <span class="impact-num" data-impact="aftercare">2.0</span>
+              <span class="impact-num" data-impact="aftercare">3.0</span>
               <span class="impact-desc"><span data-impact-label="aftercare">Days of aftercare housing, food, and casework</span>
                 <span class="impact-unit">@ $45 / DAY</span>
               </span>
             </li>
             <li>
-              <span class="impact-num" data-impact="intercept">0.6</span>
+              <span class="impact-num" data-impact="intercept">0.9</span>
               <span class="impact-desc"><span data-impact-label="intercept">Border or transit interceptions</span>
                 <span class="impact-unit">@ $150 / OPERATION</span>
               </span>
             </li>
             <li>
-              <span class="impact-num" data-impact="hours">2.6</span>
+              <span class="impact-num" data-impact="hours">3.9</span>
               <span class="impact-desc"><span data-impact-label="hours">Investigation hours</span>
                 <span class="impact-unit">@ $35 / HOUR</span>
               </span>
             </li>
             <li>
-              <span class="impact-num" data-impact="counsel">1.1</span>
+              <span class="impact-num" data-impact="counsel">1.7</span>
               <span class="impact-desc"><span data-impact-label="counsel">Trauma-informed counseling sessions</span>
                 <span class="impact-unit">@ $80 / SESSION</span>
               </span>
             </li>
             <li>
-              <span class="impact-num" data-impact="legal">1.5</span>
+              <span class="impact-num" data-impact="legal">2.3</span>
               <span class="impact-desc"><span data-impact-label="legal">Hours of survivor legal casework</span>
                 <span class="impact-unit">@ $60 / HOUR</span>
               </span>
             </li>
             <li>
-              <span class="impact-num" data-impact="rescue">2.3%</span>
+              <span class="impact-num" data-impact="rescue">3.4%</span>
               <span class="impact-desc"><span data-impact-label="rescue">Share of one documented rescue</span>
                 <span class="impact-unit">@ $4,000 / PERSON</span>
               </span>
@@ -219,31 +217,31 @@
     </div>
   </section>
 
+  <!-- ============ FUNDING ============ -->
+  <section class="section" id="donors">
+    <div class="container">
+      <div class="section-head donors-head">
+        <span class="section-index">02</span>
+        <div class="feed-head">
+          <h2>Funding</h2>
+          <span class="feed-live"><span class="feed-live-dot" aria-hidden="true"></span> Live</span>
+        </div>
+      </div>
+      <ul class="feed-list" id="pledgerRows" aria-label="Recent funding" aria-live="polite" aria-relevant="additions"></ul>
+    </div>
+  </section>
+
   <!-- ============ ALLOCATION ============ -->
   <section class="section" id="allocation">
     <div class="container">
       <div class="section-head">
-        <span class="section-index">02</span>
+        <span class="section-index">03</span>
         <h2>Transparency</h2>
       </div>
       <p class="total-figure" id="raisedTotal">$0</p>
       <p class="total-caption">Raised to date. Where every dollar went.</p>
       <div class="rib" id="rib"></div>
       <p class="ribbon-note">Unallocated funds are shown as their own partition. Allocations are updated quarterly, alongside the published disbursement reports.</p>
-    </div>
-  </section>
-
-  <!-- ============ RECENT PLEDGES ============ -->
-  <section class="section" id="donors">
-    <div class="container">
-      <div class="section-head donors-head">
-        <span class="section-index">03</span>
-        <div class="feed-head">
-          <h2>Pledges</h2>
-          <span class="feed-live"><span class="feed-live-dot" aria-hidden="true"></span> Live</span>
-        </div>
-      </div>
-      <ul class="feed-list" id="pledgerRows" aria-label="Recent pledges" aria-live="polite" aria-relevant="additions"></ul>
     </div>
   </section>
 

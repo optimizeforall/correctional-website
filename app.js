@@ -111,20 +111,20 @@ function stepAmount(amount, direction) {
 /* ---------- recent pledges (prototype feed) ---------- */
 
 const PLEDGES = [
-  { name: "Marcus T.", amount: 100, charityPct: 90, minsAgo: 4 },
-  { name: "Anonymous", amount: 250, charityPct: 92, minsAgo: 11 },
-  { name: "David R.", amount: 100, charityPct: 90, minsAgo: 26 },
-  { name: "Jonathan K.", amount: 500, charityPct: 90, minsAgo: 47 },
-  { name: "Anonymous", amount: 50, charityPct: 90, minsAgo: 63 },
-  { name: "Caleb M.", amount: 1000, charityPct: 95, minsAgo: 118 },
-  { name: "Stephen A.", amount: 100, charityPct: 90, minsAgo: 176 },
-  { name: "Anonymous", amount: 150, charityPct: 93, minsAgo: 243 },
-  { name: "Luis O.", amount: 300, charityPct: 90, minsAgo: 380 },
-  { name: "Nathan P.", amount: 100, charityPct: 90, minsAgo: 1495 },
-  { name: "Anonymous", amount: 2000, charityPct: 95, minsAgo: 1730 },
-  { name: "Elijah W.", amount: 75, charityPct: 90, minsAgo: 2980 },
-  { name: "Thomas B.", amount: 100, charityPct: 92, minsAgo: 4460 },
-  { name: "Anonymous", amount: 5000, charityPct: 100, minsAgo: 7300 }
+  { name: "Marcus T.", amount: 100, charityPct: 90, minsAgo: 4, kind: "pledge" },
+  { name: "Anonymous", amount: 250, charityPct: 92, minsAgo: 11, kind: "donation" },
+  { name: "David R.", amount: 100, charityPct: 90, minsAgo: 26, kind: "pledge" },
+  { name: "Jonathan K.", amount: 500, charityPct: 90, minsAgo: 47, kind: "pledge" },
+  { name: "Anonymous", amount: 50, charityPct: 90, minsAgo: 63, kind: "donation" },
+  { name: "Caleb M.", amount: 1000, charityPct: 95, minsAgo: 118, kind: "pledge" },
+  { name: "Stephen A.", amount: 100, charityPct: 90, minsAgo: 176, kind: "pledge" },
+  { name: "Anonymous", amount: 150, charityPct: 93, minsAgo: 243, kind: "donation" },
+  { name: "Luis O.", amount: 300, charityPct: 90, minsAgo: 380, kind: "pledge" },
+  { name: "Nathan P.", amount: 100, charityPct: 90, minsAgo: 1495, kind: "pledge" },
+  { name: "Anonymous", amount: 2000, charityPct: 95, minsAgo: 1730, kind: "donation" },
+  { name: "Elijah W.", amount: 75, charityPct: 90, minsAgo: 2980, kind: "pledge" },
+  { name: "Thomas B.", amount: 100, charityPct: 92, minsAgo: 4460, kind: "pledge" },
+  { name: "Anonymous", amount: 5000, charityPct: 100, minsAgo: 7300, kind: "donation" }
 ];
 
 /* ============================================================
@@ -156,6 +156,7 @@ const fmtAgo = (mins) => {
 
 const amountEl = $("pledgeAmount");
 const btnAmountEl = $("pledgeBtnAmount");
+const giveAmountEl = $("giveBtnAmount");
 const split90El = $("split90");
 const split10El = $("split10");
 const impactBaseEl = $("impactBase");
@@ -164,6 +165,48 @@ const isPledgePage = document.body.dataset.page === "pledge";
 const isSignupPage = document.body.dataset.page === "signup";
 const isCheckoutPage = isPledgePage || isSignupPage;
 if (isSignupPage) givingPath = "brother";
+
+function moneyQuery() {
+  const params = new URLSearchParams();
+  params.set("amount", String(currentAmount));
+  if (charityPct !== DEFAULT_CHARITY_PCT) params.set("split", String(charityPct));
+  return params.toString();
+}
+
+function applyIncomingMoney() {
+  const params = new URLSearchParams(window.location.search);
+  const amount = Number(params.get("amount"));
+  if (Number.isFinite(amount) && amount > 0) {
+    currentAmount = clamp(Math.round(amount), minAmount, MAX_PLEDGE);
+  }
+  const split = Number(params.get("split"));
+  if (Number.isFinite(split) && split >= 90 && split <= 100) {
+    charityPct = Math.round(split);
+    if (splitSlider) splitSlider.value = String(charityPct);
+  }
+}
+
+function syncPathLinks() {
+  const qs = moneyQuery();
+  const join = $("homePledgeCta");
+  if (join) join.href = "signup/?" + qs;
+  const begin = $("beginPledgeBtn");
+  if (begin) begin.href = "../signup/?" + qs;
+  const give = $("homeGiveCta");
+  if (!give) return;
+  const checkoutUrl = document.body.dataset.checkoutUrl;
+  if (checkoutUrl) {
+    give.href = checkoutUrl.replace("{amount}", String(currentAmount));
+    give.target = "_blank";
+    give.rel = "noopener noreferrer";
+    return;
+  }
+  const subject = "Gift of " + fmtMoney(currentAmount);
+  const body = "I'd like to give " + fmtMoney(currentAmount) + ", with " + charityPct + "% to the charities.";
+  give.href = "mailto:join@joincorrectional.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  give.removeAttribute("target");
+  give.removeAttribute("rel");
+}
 
 function setText(id, text) {
   const el = $(id);
@@ -178,6 +221,8 @@ function renderAmount() {
   setText("splitPctCorr", (100 - charityPct) + "%");
   if (amountEl) amountEl.textContent = fmtMoney(currentAmount);
   if (btnAmountEl) btnAmountEl.textContent = fmtMoney(currentAmount);
+  if (giveAmountEl) giveAmountEl.textContent = fmtMoney(currentAmount);
+  syncPathLinks();
   if (split90El) split90El.textContent = fmtMoney(deployed, true);
   if (split10El) split10El.textContent = fmtMoney(kept, true);
   if (impactBaseEl) impactBaseEl.textContent = fmtMoney(deployed, true);
@@ -558,7 +603,7 @@ function applyMoneyMode() {
   renderAmount();
 }
 
-function selectPath(name) {
+function selectPath(name, opts) {
   givingPath = name;
   document.querySelectorAll(".path-card").forEach((card) => {
     const on = card.dataset.path === name;
@@ -572,16 +617,20 @@ function selectPath(name) {
   if (give) give.hidden = name !== "give";
   if (money) money.hidden = name !== "give";
   applyMoneyMode();
-  scrollToEl(name === "brother" ? brother : give);
+  if (!(opts && opts.quiet)) {
+    scrollToEl(name === "brother" ? brother : give);
+  }
 }
 
 function selectCadence(next) {
+  const changed = cadence !== next;
   cadence = next;
   document.querySelectorAll(".cadence-btn").forEach((btn) => {
     const on = btn.dataset.cadence === next;
     btn.classList.toggle("is-active", on);
     btn.setAttribute("aria-pressed", on ? "true" : "false");
   });
+  if (changed) currentAmount = currentPreset().recommended;
   applyMoneyMode();
 }
 
@@ -619,12 +668,25 @@ function initPathChoice() {
       joinForm.addEventListener("submit", (e) => e.preventDefault());
     }
     initPurgeGate();
+  }
+}
+
+function initPledgePageEntry() {
+  if (!isPledgePage) return;
+  applyIncomingMoney();
+  const params = new URLSearchParams(window.location.search);
+  const path = params.get("path");
+  const qs = moneyQuery();
+  if (path === "brother") {
+    location.replace("../signup/?" + qs);
     return;
   }
-  if (!isPledgePage) return;
-  document.querySelectorAll(".path-card").forEach((card) => {
-    card.addEventListener("click", () => selectPath(card.dataset.path));
-  });
+  if (path === "give") {
+    location.replace("../index.html?" + qs + "#join");
+    return;
+  }
+  const begin = $("beginPledgeBtn");
+  if (begin) begin.href = "../signup/?" + qs;
 }
 
 /* ---------- allocation data (gauntlet ledger) ---------- */
@@ -1004,13 +1066,15 @@ function rowHtml(p) {
   const elapsed = (Date.now() - startTime) / 60000;
   const pct = p.charityPct ?? DEFAULT_CHARITY_PCT;
   const ops = 100 - pct;
+  const kind = p.kind === "donation" ? "Donation" : "Pledge";
   const tip = ops === 0
-    ? "100% of this pledge went to the charities \u2014 Correctional took nothing."
-    : pct + "% of this pledge went to the charities. " + ops + "% runs Correctional.";
+    ? "100% of this " + kind.toLowerCase() + " went to the charities \u2014 Correctional took nothing."
+    : pct + "% of this " + kind.toLowerCase() + " went to the charities. " + ops + "% runs Correctional.";
   const anon = p.name === "Anonymous" ? " feed-name--anon" : "";
   return `
     <span class="feed-name${anon}">${p.name}</span>
     <span class="feed-amount">${fmtMoney(p.amount)}</span>
+    <span class="feed-kind">${kind}</span>
     <span class="feed-split" tabindex="0" aria-label="${tip}">${pct}%<span class="feed-split-tip" role="tooltip" aria-hidden="true">${tip}</span></span>
     <span class="feed-time">${fmtAgo(p.minsAgo + elapsed)}</span>`;
 }
@@ -1072,6 +1136,7 @@ if (pledgerRows) {
         name: Math.random() < 0.5 ? "Anonymous" : NAME_POOL[Math.floor(Math.random() * NAME_POOL.length)],
         amount: drawAmount(),
         charityPct: drawSplit(),
+        kind: Math.random() < 0.38 ? "donation" : "pledge",
         minsAgo: 0
       }, true);
       scheduleLivePledge();
@@ -1084,12 +1149,17 @@ if (pledgerRows) {
    init
    ============================================================ */
 
+if (isPledgePage) {
+  initPledgePageEntry();
+}
+
 if (amountEl) {
   rebuildScale();
   rebuildTicks();
   initPledgeSlider();
   initPledgeControls();
   initPathChoice();
+  applyIncomingMoney();
   renderAmount();
 }
 
